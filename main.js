@@ -89,6 +89,22 @@ function resetRows () {
     currentBox = undefined;
 }
 
+// REGISTER KEYBOARD
+var buttons = document.getElementsByClassName("key");
+var buttonsCount = buttons.length;
+for (var i = 0; i <= buttonsCount; i += 1) {
+    buttons[i].onclick = function(e) {
+        char = this.id;
+        if (char == "Enter") {
+            checkWord();
+        } else if (char == "Backspace") {
+            deleteChar();
+        } else {
+            inputCharacter(char.toLowerCase());
+        }
+    };
+}
+
 // CHECK WORD CORRECT
 function checkWord () {
     if (userWord.length == 5 && data.includes(userWord)) {
@@ -96,7 +112,7 @@ function checkWord () {
             for(let ind = 0; ind <= 5; ind++){
                 box = document.querySelectorAll(`.${currentRow}[name='${ind}']`);
                 for(var i = 0; i < box.length; i++){
-                    box[i].style.backgroundColor = "green";   
+                    box[i].style.backgroundColor = "#6aaa64";   
                 }
             }
             gameOver(true);
@@ -104,13 +120,17 @@ function checkWord () {
             for(let ind = 0; ind < 5; ind++){
                 userWordChars = (userWord.split("")).map(char => char.toLowerCase());
                 box = document.querySelectorAll(`.${currentRow}[name='${ind+1}']`);
+                keys = document.getElementById(userWordChars[ind].toUpperCase());
                 for(var i = 0; i < box.length; i++){
                     if(userWordChars[ind] == wordChars[ind]) {
-                        box[i].style.backgroundColor = "green";
+                        box[i].style.backgroundColor = "#6aaa64";
+                        keys.classList.add("correct");
                     } else if (wordChars.includes(userWordChars[ind])) {
-                        box[i].style.backgroundColor = "yellow";   
+                        box[i].style.backgroundColor = "#c9b458";
+                        keys.classList.add("wrong-location");
                     } else {
-                        box[i].style.backgroundColor = "DarkGrey";   
+                        box[i].style.backgroundColor = "DarkGrey"; 
+                        keys.classList.add("wrong");  
                     }
                 }
 
