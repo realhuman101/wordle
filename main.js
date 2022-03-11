@@ -19,6 +19,7 @@ if (!setWord) {
     console.log("running");
     setWord = true;
     playing = true;
+
 }
 
 
@@ -122,7 +123,7 @@ function checkWord () {
             gameOver(true);
         } else {
             var wordGuesses = word.split("");
-            var guessNulls = wordGuesses;
+            var guessNulls = word.split("");
             for(let ind = 0; ind < 5; ind++){
                 userWordChars = (userWord.split("")).map(char => char.toLowerCase());
                 box = document.querySelectorAll(`.${currentRow}[name='${ind+1}']`);
@@ -131,12 +132,12 @@ function checkWord () {
                     if(userWordChars[ind] == guessNulls[ind]) {
                         box[i].style.backgroundColor = "#6aaa64";
                         keys.classList.add("correct");
-                        guessNulls[ind] = undefined;
                         wordGuesses.splice(wordGuesses.indexOf(userWordChars[ind]),1);
                     } else {
                         box[i].style.backgroundColor = "DarkGrey"; 
                         keys.classList.add("wrong");  
                     }
+                    box[i].style.color = "white";
                 }
             }
             for (let ind = 0; ind < 5; ind++) {
@@ -165,11 +166,34 @@ function checkWord () {
     }
 }
 
+// COOKIE FUNCTIONS
+function setCookie(cname, cvalue) {
+    const d = new Date();
+    document.cookie = cname + "=" + cvalue + ";path=/";
+}
+
+function getCookie(cname) {
+    let name = cname + "=";
+    let decodedCookie = decodeURIComponent(document.cookie);
+    let ca = decodedCookie.split(';');
+    for(let i = 0; i <ca.length; i++) {
+      let c = ca[i];
+      while (c.charAt(0) == ' ') {
+        c = c.substring(1);
+      }
+      if (c.indexOf(name) == 0) {
+        return c.substring(name.length, c.length);
+      }
+    }
+    return undefined;
+}
+
 // GAME OVER STUFF
 function gameOver (win) {
     var gameover = document.getElementById("gameover");
     var maintext = document.getElementById("maintxt");
     var subtext = document.getElementById("subtxt");
+    var currentStats = currentRow.charAt(3);
     if (win) {
         maintext.innerHTML = "Congratulations! You won!";
         subtext.innerHTML = "Great job! You guessed the word!";
@@ -177,6 +201,7 @@ function gameOver (win) {
         maintext.innerHTML = "Oh no! You lost!";
         subtext.innerHTML = `The word was ${word}... You'll get it next time!`;
     }
+    setStats();
     gameover.style.display = "block";
     playing = false;
 }
@@ -187,4 +212,21 @@ document.getElementById('replay').onclick = function() {
 
 function replay() {
     location.reload();
+}
+
+function setStats () {
+    var stats = []
+    if (typeof getCookie("played") == "undefined") {
+        setCookie("played",'1');
+        played = 1;
+    } else {
+        played = parseInt(getCookie("played"));
+    }
+    for (let row = 1; row <= 6; row++) {
+        if (typeof getCookie("skill"+row.toString()) == "undefined") {
+            setCookie("skill"+row.toString(),"0");
+        } else {
+            stats.push(getCookie("skill"+row.toString()));
+        }
+    }
 }
