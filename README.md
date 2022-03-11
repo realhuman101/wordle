@@ -1,4 +1,6 @@
 # wordle
 My wordle clone
 
-Very bad javascript
+Very bad javascript lol
+
+pls play
