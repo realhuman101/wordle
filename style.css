@@ -115,6 +115,22 @@
   cursor: pointer;
   user-select: none;
 }
+
+@media only screen 
+  and (min-device-width: 320px) 
+  and (max-device-width: 480px)
+  and (-webkit-min-device-pixel-ratio: 2) {
+    .keyboard {
+      grid-auto-rows: 6em;
+      gap: .50em;
+    }
+    .ltr {
+      width: 85px;
+    }
+    .key {
+      font-size: 30px;
+    }
+}
   
 .key.large {
   grid-column: span 3 !important;
