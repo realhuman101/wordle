@@ -120,8 +120,14 @@
   and (min-device-width: 320px) 
   and (max-device-width: 480px)
   and (-webkit-min-device-pixel-ratio: 2) {
+    .rowBox {
+      width: 100%;
+      height: 170px;
+      line-height: 170px;
+      font-size: 100px;
+    }
     .keyboard {
-      grid-auto-rows: 6em;
+      grid-auto-rows: 9em;
       gap: .50em;
     }
     .ltr {
