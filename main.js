@@ -92,6 +92,7 @@ function resetRows () {
     currentBox = undefined;
 }
 
+
 // REGISTER KEYBOARD
 if (playing) {
     var buttons = document.getElementsByClassName("key");
@@ -149,7 +150,7 @@ function checkWord () {
                             box[i].style.backgroundColor = "DarkGrey"; 
                             keys.classList.add("wrong"); 
                         }
-                        box[i].style.color = "white";
+                        box[i].style.color = 'white'
                     }
                 }
             }
@@ -163,6 +164,11 @@ function checkWord () {
                         keys.classList.add("correct");
                     }
                     box[i].style.color = "white";
+                    box[i].style.border = "2px solid rgb(180, 180, 180)";
+                    box[i].classList.add("apply-zoom");
+                    box[i].addEventListener("animationend", (e) => {
+                        box[i].classList.remove("apply-zoom");
+                    });
                 }
             }
             resetRows();
