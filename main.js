@@ -118,12 +118,41 @@ function checkWord () {
                 box = document.querySelectorAll(`.${currentRow}[name='${ind}']`);
                 for(var i = 0; i < box.length; i++){
                     box[i].style.backgroundColor = "#6aaa64";   
+                    box[i].style.color = "white";
                 }
             }
             gameOver(true);
         } else {
-            var wordGuesses = word.split("");
             var guessNulls = word.split("");
+            for (let ind = 0; ind < 5; ind++) {
+                userWordChars = (userWord.split("")).map(char => char.toLowerCase());
+                box = document.querySelectorAll(`.${currentRow}[name='${ind+1}']`);
+                keys = document.getElementById(userWordChars[ind].toUpperCase());
+                let continueCheck = true;
+                for (let chck = 0; chck < guessNulls.length; chck++) {
+                    if ((guessNulls[chck] == userWordChars[chck]) && !((guessNulls.filter((_,itm) => itm !== chck)).includes(guessNulls[chck]))) {
+                        continueCheck = false;
+                    }
+                }
+                for(var i = 0; i < box.length; i++){
+                    for(let chr = 0; chr < guessNulls.length; chr++){
+                        if (continueCheck) {
+                            if (guessNulls[chr] == userWordChars[ind] && chr !== ind) {
+                                box[i].style.backgroundColor = "#c9b458";
+                                keys.classList.add("wrong-location");
+                                keys.classList.remove("wrong");
+                            } else if (!(guessNulls.includes(userWordChars[ind]))){
+                                box[i].style.backgroundColor = "DarkGrey"; 
+                                keys.classList.add("wrong");  
+                            }
+                        } else {
+                            box[i].style.backgroundColor = "DarkGrey"; 
+                            keys.classList.add("wrong"); 
+                        }
+                        box[i].style.color = "white";
+                    }
+                }
+            }
             for(let ind = 0; ind < 5; ind++){
                 userWordChars = (userWord.split("")).map(char => char.toLowerCase());
                 box = document.querySelectorAll(`.${currentRow}[name='${ind+1}']`);
@@ -132,25 +161,8 @@ function checkWord () {
                     if(userWordChars[ind] == guessNulls[ind]) {
                         box[i].style.backgroundColor = "#6aaa64";
                         keys.classList.add("correct");
-                        wordGuesses.splice(wordGuesses.indexOf(userWordChars[ind]),1);
-                    } else {
-                        box[i].style.backgroundColor = "DarkGrey"; 
-                        keys.classList.add("wrong");  
                     }
                     box[i].style.color = "white";
-                }
-            }
-            for (let ind = 0; ind < 5; ind++) {
-                userWordChars = (userWord.split("")).map(char => char.toLowerCase());
-                box = document.querySelectorAll(`.${currentRow}[name='${ind+1}']`);
-                keys = document.getElementById(userWordChars[ind].toUpperCase());
-                for(var i = 0; i < box.length; i++){
-                    if (wordGuesses.includes(userWordChars[ind])) {
-                        box[i].style.backgroundColor = "#c9b458";
-                        keys.classList.add("wrong-location");
-                        keys.classList.remove("wrong");
-                        wordGuesses.splice(wordGuesses.indexOf(userWordChars[ind]),1);
-                    }
                 }
             }
             resetRows();
@@ -168,7 +180,6 @@ function checkWord () {
 
 // COOKIE FUNCTIONS
 function setCookie(cname, cvalue) {
-    const d = new Date();
     document.cookie = cname + "=" + cvalue + ";path=/";
 }
 
@@ -228,5 +239,11 @@ function setStats () {
         } else {
             stats.push(getCookie("skill"+row.toString()));
         }
+    }
+    let tries = parseInt(currentRow.charAt(3))
+    stats[tries-1] = (parseInt(stats[tries-1])+tries).toString();
+
+    for (let skill; skill < 7; skill++) {
+
     }
 }
