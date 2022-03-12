@@ -120,13 +120,13 @@ function checkWord () {
                 for(var i = 0; i < box.length; i++){
                     box[i].style.backgroundColor = "#6aaa64";   
                     box[i].style.color = "white";
+                    box = document.querySelectorAll(`.${currentRow}[name='${ind}']`);
                 }
             }
-            box[i].style.border = "2px solid rgb(180, 180, 180)";
-            box[i].classList.add("apply-zoom");
-            box[i].addEventListener("animationend", (e) => {
-                box[i].classList.remove("apply-zoom");
-            });
+            for(var i = 0; i < box.length; i++){
+                box[i].style.border = "2px solid rgb(180, 180, 180)";
+                box[i].classList.add("apply-zoom");
+            }
             gameOver(true);
         } else {
             var occurances = {};
@@ -140,40 +140,40 @@ function checkWord () {
                 keys = document.getElementById(userList[ind].toUpperCase());
                 box = document.querySelectorAll(`.${currentRow}[name='${ind+1}']`);
                 for (var i = 0; i < box.length; i++) {
-                    if (!((wordList.includes(userList[ind]) && (occurances[userList[ind]] !== 0)))) {
-                        box[i].style.backgroundColor = "DarkGrey"; 
-                        if (!(box[i].classList.contains("wrong-location"))) {
-                            keys.classList.add("wrong");  
-                        }
-                        box[i].style.color = "white";
+                    box[i].style.backgroundColor = "DarkGrey"; 
+                    if (!(box[i].classList.contains("wrong-location"))) {
+                        keys.classList.add("wrong");  
                     }
+                    box[i].style.color = "white";
                 }
             }
             for (let ind = 0; ind < 5; ind++) {
                 keys = document.getElementById(userList[ind].toUpperCase());
-                if (wordList[ind] == userList[ind] && occurances[wordList[ind]] !== 0) {
+                if (wordList[ind] == userList[ind] && occurances[wordList[ind]] > 0) {
                     box = document.querySelectorAll(`.${currentRow}[name='${ind+1}']`);
                     for(var i = 0; i < box.length; i++){
                         box[i].style.backgroundColor = "#6aaa64";   
                         box[i].style.color = "white";
-                        keys.classList.remove("wrong");
+                        if (keys.classList.contains("wrong")) {
+                            keys.classList.remove("wrong");
+                        }
                         keys.classList.add("correct");
-                        occurances[wordList[ind]] = occurances[wordList[ind]] - 1
+                        occurances[wordList[ind]] = occurances[wordList[ind]] - 1;
                     }
                 } 
             }
             for (let ind = 0; ind < 5; ind++) {
                 keys = document.getElementById(userList[ind].toUpperCase());
-                if (wordList.includes(userList[ind]) && occurances[userList[ind]] !== 0) {
+                if ((wordList.includes(userList[ind]) && occurances[userList[ind]] > 0) && userList[ind] !== wordList[ind]) {
                     box = document.querySelectorAll(`.${currentRow}[name='${ind+1}']`);
-                    for(var i = 0; i < box.length; i++){
-                        box[i].style.backgroundColor = "#c9b458";   
-                        box[i].style.color = "white";
+                    box[0].style.backgroundColor = "#c9b458";   
+                    box[0].style.color = "white";
+                    if (keys.classList.contains("wrong")) {
                         keys.classList.remove("wrong");
-                        keys.classList.add("wrong-placement");
-                        occurances[userList[ind]] = occurances[userList[ind]] - 1
                     }
-                } 
+                    keys.classList.add("wrong-location");
+                    occurances[wordList[ind]] = occurances[wordList[ind]] - 1;
+                }
             }
             for (let ind = 0; ind < 5; ind++) {
                 box = document.querySelectorAll(`.${currentRow}[name='${ind+1}']`);
@@ -181,9 +181,6 @@ function checkWord () {
                     box[i].style.color = "white";
                     box[i].style.border = "2px solid rgb(180, 180, 180)";
                     box[i].classList.add("apply-zoom");
-                    box[i].addEventListener("animationend", (e) => {
-                        box[i].classList.remove("apply-zoom");
-                    });
                 }
             }
             resetRows();
