@@ -122,47 +122,62 @@ function checkWord () {
                     box[i].style.color = "white";
                 }
             }
+            box[i].style.border = "2px solid rgb(180, 180, 180)";
+            box[i].classList.add("apply-zoom");
+            box[i].addEventListener("animationend", (e) => {
+                box[i].classList.remove("apply-zoom");
+            });
             gameOver(true);
         } else {
-            var guessNulls = word.split("");
+            var occurances = {};
+            var wordList = word.split("");
+            var userList = userWord.split("");
             for (let ind = 0; ind < 5; ind++) {
-                userWordChars = (userWord.split("")).map(char => char.toLowerCase());
+                occurances[wordList[ind]] = 0;
+            }
+            for (let ind = 0; ind < 5; ind++) {
+                occurances[wordList[ind]] = occurances[wordList[ind]] + 1;
+                keys = document.getElementById(userList[ind].toUpperCase());
                 box = document.querySelectorAll(`.${currentRow}[name='${ind+1}']`);
-                keys = document.getElementById(userWordChars[ind].toUpperCase());
-                let continueCheck = true;
-                for (let chck = 0; chck < guessNulls.length; chck++) {
-                    if ((guessNulls[chck] == userWordChars[chck]) && !((guessNulls.filter((_,itm) => itm !== chck)).includes(guessNulls[chck]))) {
-                        continueCheck = false;
-                    }
-                }
-                for(var i = 0; i < box.length; i++){
-                    for(let chr = 0; chr < guessNulls.length; chr++){
-                        if (continueCheck) {
-                            if (guessNulls[chr] == userWordChars[ind] && chr !== ind) {
-                                box[i].style.backgroundColor = "#c9b458";
-                                keys.classList.add("wrong-location");
-                                keys.classList.remove("wrong");
-                            } else if (!(guessNulls.includes(userWordChars[ind]))){
-                                box[i].style.backgroundColor = "DarkGrey"; 
-                                keys.classList.add("wrong");  
-                            }
-                        } else {
-                            box[i].style.backgroundColor = "DarkGrey"; 
-                            keys.classList.add("wrong"); 
+                for (var i = 0; i < box.length; i++) {
+                    if (!((wordList.includes(userList[ind]) && (occurances[userList[ind]] !== 0)))) {
+                        box[i].style.backgroundColor = "DarkGrey"; 
+                        if (!(box[i].classList.contains("wrong-location"))) {
+                            keys.classList.add("wrong");  
                         }
-                        box[i].style.color = 'white'
+                        box[i].style.color = "white";
                     }
                 }
             }
-            for(let ind = 0; ind < 5; ind++){
-                userWordChars = (userWord.split("")).map(char => char.toLowerCase());
-                box = document.querySelectorAll(`.${currentRow}[name='${ind+1}']`);
-                keys = document.getElementById(userWordChars[ind].toUpperCase());
-                for(var i = 0; i < box.length; i++){
-                    if(userWordChars[ind] == guessNulls[ind]) {
-                        box[i].style.backgroundColor = "#6aaa64";
+            for (let ind = 0; ind < 5; ind++) {
+                keys = document.getElementById(userList[ind].toUpperCase());
+                if (wordList[ind] == userList[ind] && occurances[wordList[ind]] !== 0) {
+                    box = document.querySelectorAll(`.${currentRow}[name='${ind+1}']`);
+                    for(var i = 0; i < box.length; i++){
+                        box[i].style.backgroundColor = "#6aaa64";   
+                        box[i].style.color = "white";
+                        keys.classList.remove("wrong");
                         keys.classList.add("correct");
+                        occurances[wordList[ind]] = occurances[wordList[ind]] - 1
                     }
+                } 
+            }
+            for (let ind = 0; ind < 5; ind++) {
+                keys = document.getElementById(userList[ind].toUpperCase());
+                if (wordList.includes(userList[ind]) && occurances[userList[ind]] !== 0) {
+                    box = document.querySelectorAll(`.${currentRow}[name='${ind+1}']`);
+                    for(var i = 0; i < box.length; i++){
+                        box[i].style.backgroundColor = "#c9b458";   
+                        box[i].style.color = "white";
+                        keys.classList.remove("wrong");
+                        keys.classList.add("wrong-placement");
+                        occurances[userList[ind]] = occurances[userList[ind]] - 1
+                    }
+                } 
+            }
+            for (let ind = 0; ind < 5; ind++) {
+                box = document.querySelectorAll(`.${currentRow}[name='${ind+1}']`);
+                for(var i = 0; i < box.length; i++){
                     box[i].style.color = "white";
                     box[i].style.border = "2px solid rgb(180, 180, 180)";
                     box[i].classList.add("apply-zoom");
