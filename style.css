@@ -97,6 +97,49 @@
   animation: zoom 0.45s ease;
 }
 
+@keyframes flip {
+  0% {
+    transform: perspective(120px) rotateX(-180deg) rotateY(0deg);
+  }
+  100% {
+    transform: perspective(120px) rotateX(0deg) rotateY(0deg);
+  }
+} 
+
+.apply-flip {
+  animation: flip 0.45s ease;
+}
+
+@keyframes dance {
+  20% {
+    transform: translateY(-50%);
+  }  
+
+  40% {
+    transform: translateY(5%);
+  }  
+
+  60% {
+    transform: translateY(-25%);
+  }  
+
+  80% {
+    transform: translateY(2.5%);
+  }  
+
+  90% {
+    transform: translateY(-5%);
+  }  
+
+  100% {
+    transform: translateY(0);
+  }
+}
+
+.apply-dance {
+  animation: dance 500ms ease-in-out;
+}
+
 .break {
   padding: 30px;
 }
