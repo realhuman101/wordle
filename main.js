@@ -146,7 +146,7 @@ function checkWord () {
                 box = document.querySelectorAll(`.${currentRow}[name='${ind+1}']`);
                 for (var i = 0; i < box.length; i++) {
                     box[i].style.backgroundColor = "DarkGrey"; 
-                    if (!(box[i].classList.contains("wrong-location"))) {
+                    if (!(keys.classList.contains("wrong-location"))) {
                         keys.classList.add("wrong");  
                     }
                     box[i].style.color = "white";
@@ -177,7 +177,7 @@ function checkWord () {
                         keys.classList.remove("wrong");
                     }
                     keys.classList.add("wrong-location");
-                    occurances[wordList[ind]] = occurances[wordList[ind]] - 1;
+                    occurances[userList[ind]] = occurances[userList[ind]] - 1;
                 }
             }
             for (let ind = 0; ind < 5; ind++) {
