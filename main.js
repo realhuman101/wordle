@@ -61,8 +61,15 @@ function inputCharacter (char) {
         box = document.querySelectorAll(`.${currentRow}[name='${currentBox}']`);
         for(var i = 0; i < box.length; i++){
             box[i].innerText=char;    
-        }
+            box[i].style.border = "2px solid rgb(180, 180, 180)";
+            if (box[i].classList.contains('apply-zoom')) {
+                var boxItm = box[i].cloneNode(true);
+                box[i].parentNode.replaceChild(boxItm,box[i]);
+            } else {
+                box[i].classList.add("apply-zoom");
+            }
         userWord += char;
+        }
     }
 }
 
@@ -71,6 +78,7 @@ function deleteChar () {
         box = document.querySelectorAll(`.${currentRow}[name='${currentBox}']`);
         for(let ind = 0; ind < box.length; ind++){
             box[ind].innerText = "";
+            box[ind].style.border = '2px solid darkgray';
         }
         currentBox = (parseInt(currentBox) - 1).toString();
         userWord = userWord.slice(0, -1);
@@ -120,12 +128,9 @@ function checkWord () {
                 for(var i = 0; i < box.length; i++){
                     box[i].style.backgroundColor = "#6aaa64";   
                     box[i].style.color = "white";
-                    box = document.querySelectorAll(`.${currentRow}[name='${ind}']`);
+                    box[i].style.border = "2px solid rgb(180, 180, 180)";
+                    box[i].classList.add("apply-dance");
                 }
-            }
-            for(var i = 0; i < box.length; i++){
-                box[i].style.border = "2px solid rgb(180, 180, 180)";
-                box[i].classList.add("apply-zoom");
             }
             gameOver(true);
         } else {
@@ -166,7 +171,7 @@ function checkWord () {
                 keys = document.getElementById(userList[ind].toUpperCase());
                 if ((wordList.includes(userList[ind]) && occurances[userList[ind]] > 0) && userList[ind] !== wordList[ind]) {
                     box = document.querySelectorAll(`.${currentRow}[name='${ind+1}']`);
-                    box[0].style.backgroundColor = "#c9b458";   
+                    box[0].style.backgroundColor = "#c9b458";
                     box[0].style.color = "white";
                     if (keys.classList.contains("wrong")) {
                         keys.classList.remove("wrong");
@@ -180,7 +185,7 @@ function checkWord () {
                 for(var i = 0; i < box.length; i++){
                     box[i].style.color = "white";
                     box[i].style.border = "2px solid rgb(180, 180, 180)";
-                    box[i].classList.add("apply-zoom");
+                    box[i].classList.add('apply-flip');
                 }
             }
             resetRows();
