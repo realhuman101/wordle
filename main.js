@@ -245,7 +245,7 @@ function gameOver (win) {
         maintext.innerHTML = "Oh no! You lost!";
         subtext.innerHTML = `The word was ${word}... You'll get it next time!`;
     }
-    setStats();
+    setStats(win);
     gameover.style.display = "block";
     playing = false;
 }
@@ -259,7 +259,7 @@ function replay() {
 }
 
 // STATISTICS
-function setStats () {
+function setStats (win) {
     var stats = []
     if (typeof getCookie('attempts') == 'undefined') {
         setCookie('attempts','1');
@@ -276,7 +276,9 @@ function setStats () {
         }
     }
     let tries = parseInt(currentRow.charAt(3));
-    stats[tries-1] = parseInt(stats[tries-1])+1;
+    if(win) {
+        stats[tries-1] = parseInt(stats[tries-1])+1;
+    }
     correct = stats.reduce((partialSum, a) => partialSum + a, 0);
     max = Math.max.apply(Math,stats);
     setCookie(`skill${tries}`,(stats[tries-1]).toString());
@@ -286,4 +288,12 @@ function setStats () {
         skillBar.style.width = `${100*(stats[skill]/max)}%`;
         skillBar.innerText = stats[skill].toString();
     }
+
+    let playedStat = document.getElementById('playedStat');
+    let winStat = document.getElementById('winStat');
+    let winPStat = document.getElementById('winPStat');
+
+    playedStat.innerText = attempts;
+    winStat.innerText = correct;
+    winPStat.innerText = parseInt(100*(correct/attempts));
 }
