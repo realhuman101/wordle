@@ -33,6 +33,7 @@ html, body {
   -moz-user-select: none;
   -o-user-select: none;
   user-select: none;
+  pointer-events: none;
   cursor: pointer;
   padding: 0;
   border: none;
@@ -46,6 +47,7 @@ html, body {
 }
 
 .navLogo {
+  align-self: center;
   height: 50px !important;
   width: 322.5px !important;
 }
