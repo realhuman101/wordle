@@ -4,6 +4,8 @@
         <link rel="stylesheet" href="style.css">
         <link rel="icon" type="image/x-icon" href="/media/icon.webp">
         <title>WORDLE</title>
+        <meta name="viewport">
+
     </head>
     <body class="main">
         <div class="container">
@@ -54,74 +56,76 @@
         </div>
         <br class="break">
         <div class="keyboard">
-            <button class="key ltr" id="Q">Q</button>
-            <button class="key ltr" id="W">W</button>
-            <button class="key ltr" id="E">E</button>
-            <button class="key ltr" id="R">R</button>
-            <button class="key ltr" id="T">T</button>
-            <button class="key ltr" id="Y">Y</button>
-            <button class="key ltr" id="U">U</button>
-            <button class="key ltr" id="I">I</button>
-            <button class="key ltr" id="O">O</button>
-            <button class="key ltr" id="P">P</button>
+            <button class="key ltr noZoom" id="Q">Q</button>
+            <button class="key ltr noZoom" id="W">W</button>
+            <button class="key ltr noZoom" id="E">E</button>
+            <button class="key ltr noZoom" id="R">R</button>
+            <button class="key ltr noZoom" id="T">T</button>
+            <button class="key ltr noZoom" id="Y">Y</button>
+            <button class="key ltr noZoom" id="U">U</button>
+            <button class="key ltr noZoom" id="I">I</button>
+            <button class="key ltr noZoom" id="O">O</button>
+            <button class="key ltr noZoom" id="P">P</button>
             <div class="space"></div>
-            <button class="key ltr" id="A">A</button>
-            <button class="key ltr" id="S">S</button>
-            <button class="key ltr" id="D">D</button>
-            <button class="key ltr" id="F">F</button>
-            <button class="key ltr" id="G">G</button>
-            <button class="key ltr" id="H">H</button>
-            <button class="key ltr" id="J">J</button>
-            <button class="key ltr" id="K">K</button>
-            <button class="key ltr" id="L">L</button>
+            <button class="key ltr noZoom" id="A">A</button>
+            <button class="key ltr noZoom" id="S">S</button>
+            <button class="key ltr noZoom" id="D">D</button>
+            <button class="key ltr noZoom" id="F">F</button>
+            <button class="key ltr noZoom" id="G">G</button>
+            <button class="key ltr noZoom" id="H">H</button>
+            <button class="key ltr noZoom" id="J">J</button>
+            <button class="key ltr noZoom" id="K">K</button>
+            <button class="key ltr noZoom" id="L">L</button>
             <div class="space"></div>
-            <button id="Enter" class="key large">Enter</button>
-            <button class="key ltr" id="Z">Z</button>
-            <button class="key ltr" id="X">X</button>
-            <button class="key ltr" id="C">C</button>
-            <button class="key ltr" id="V">V</button>
-            <button class="key ltr" id="B">B</button>
-            <button class="key ltr" id="N">N</button>
-            <button class="key ltr" id="M">M</button>
-            <button id="Backspace" class="key large">Del</button>
+            <button id="Enter" class="key large noZoom">Enter</button>
+            <button class="key ltr noZoom" id="Z">Z</button>
+            <button class="key ltr noZoom" id="X">X</button>
+            <button class="key ltr noZoom" id="C">C</button>
+            <button class="key ltr noZoom" id="V">V</button>
+            <button class="key ltr noZoom" id="B">B</button>
+            <button class="key ltr noZoom" id="N">N</button>
+            <button class="key ltr noZoom" id="M">M</button>
+            <button id="Backspace" class="key large noZoom">Del</button>
         </div>
         <div class="gameover" id="gameover">
             <div class="overContent">
                 <h1 id="maintxt"></h1>
                 <h3 id="subtxt"></h3>
-                <hr style="display: none;border:3px solid #f1f1f1">
-                <div class="stats">
-                    <label>Stats</label>
-                    <p>1</p>
+                <hr class="partStat" style="border:3px solid #f1f1f1">
+                <div class="stats" id="stats">
+                    <h2>Guess Statistics</h2>
+                    <hr style="visibility:hidden">
+                    <p class="statTxt">1</p>
                     <div class="bar">
-                        <div class="skills skill1"></div>
+                        <div class="skills" id="skill1"></div>
                     </div>
-                
-                    <p>2</p>
+                    <hr style="visibility:hidden">
+                    <p class="statTxt">2</p>
                     <div class="bar">
-                        <div class="skills skill2"></div>
+                        <div class="skills" id="skill2"></div>
                     </div>
-                
-                    <p>3</p>
+                    <hr style="visibility:hidden">
+                    <p class="statTxt">3</p>
                     <div class="bar">
-                        <div class="skills skill3"></div>
+                        <div class="skills" id="skill3"></div>
                     </div>
-                
-                    <p>4</p>
+                    <hr style="visibility:hidden">
+                    <p class="statTxt">4</p>
                     <div class="bar">
-                        <div class="skills skill4"></div>
+                        <div class="skills" id="skill4"></div>
                     </div>
-
-                    <p>5</p>
+                    <hr style="visibility:hidden">
+                    <p class="statTxt">5</p>
                     <div class="bar">
-                        <div class="skills skill5"></div>
+                        <div class="skills" id="skill5"></div>
                     </div>
-
-                    <p>6</p>
+                    <hr style="visibility:hidden">
+                    <p class="statTxt">6</p>
                     <div class="bar">
-                        <div class="skills skill6"></div>
+                        <div class="skills" id="skill6"></div>
                     </div>
                 </div>
+                <hr style="visibility:hidden" class="bold partStat">
                 <button class="replay" id="replay" onclick="replay()">Play Again?</button>
             </div>
         </div>
