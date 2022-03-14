@@ -208,8 +208,21 @@
     .overContent {
       height: 200px !important;
     }
-  }
-  
+}
+
+@media only screen
+  and (min-device-width: 1136px) {
+    .stats {
+      display: block;
+    }
+    .partStat {
+      display: block;
+    }
+    .overContent {
+      height: 455px;
+    }
+}
+
 .key.large {
   grid-column: span 3 !important;
 }
@@ -232,10 +245,6 @@
   --hue: 115 !important;
   --saturation: 29% !important;
   --lightness: 43% !important;
-}
-
-.stats {
-  display: none;
 }
 
 .bar {
