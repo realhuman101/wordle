@@ -25,7 +25,7 @@ if (!setWord) {
 
 // CHECK KEY
 document.addEventListener("keydown", function(e) {
-    var keynum;
+    var keynum
 
     keynum = e.key;
 
@@ -106,6 +106,16 @@ if (playing) {
     var buttons = document.getElementsByClassName("key");
     var buttonsCount = buttons.length;
     for (var i = 0; i <= buttonsCount; i += 1) {
+        buttons[i].ontouchstart = setTimeout(function(e) {
+            char = this.id;
+            if (char == "Enter") {
+                checkWord();
+            } else if (char == "Backspace") {
+                deleteChar();
+            } else {
+                inputCharacter(char.toLowerCase());
+            }
+        }, 500);
         buttons[i].onclick = function(e) {
             char = this.id;
             if (char == "Enter") {
@@ -248,25 +258,32 @@ function replay() {
     location.reload();
 }
 
+// STATISTICS
 function setStats () {
     var stats = []
-    if (typeof getCookie("played") == "undefined") {
-        setCookie("played",'1');
-        played = 1;
+    if (typeof getCookie('attempts') == 'undefined') {
+        setCookie('attempts','1');
+        attempts = 1;
     } else {
-        played = parseInt(getCookie("played"));
+        attempts = parseInt(getCookie('attempts')) + 1;
+        setCookie('attempts',attempts.toString());
     }
     for (let row = 1; row <= 6; row++) {
         if (typeof getCookie("skill"+row.toString()) == "undefined") {
             setCookie("skill"+row.toString(),"0");
         } else {
-            stats.push(getCookie("skill"+row.toString()));
+            stats.push(parseInt(getCookie("skill"+row.toString())));
         }
     }
-    let tries = parseInt(currentRow.charAt(3))
-    stats[tries-1] = (parseInt(stats[tries-1])+tries).toString();
+    let tries = parseInt(currentRow.charAt(3));
+    stats[tries-1] = parseInt(stats[tries-1])+1;
+    correct = stats.reduce((partialSum, a) => partialSum + a, 0);
+    max = Math.max.apply(Math,stats);
+    setCookie(`skill${tries}`,(stats[tries-1]).toString());
 
-    for (let skill; skill < 7; skill++) {
-
+    for (let skill = 0; skill < 6; skill++) {
+        skillBar = document.getElementById(`skill${skill+1}`);
+        skillBar.style.width = `${100*(stats[skill]/max)}%`;
+        skillBar.innerText = stats[skill].toString();
     }
 }
