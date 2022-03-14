@@ -327,3 +327,49 @@ function setStats (win) {
         statsSet = true;
     }
 }
+
+function showStats () {
+    var stats = [];
+    if (typeof getCookie('attempts') == 'undefined') {
+        setCookie('attempts','0');
+        attempts = 0;
+    } else {
+        attempts = parseInt(getCookie('attempts'));
+    }
+    for (let row = 1; row <= 6; row++) {
+        if (typeof getCookie("skill"+row.toString()) == "undefined") {
+            setCookie("skill"+row.toString(),"0");
+            stats.push(0);
+        } else {
+            stats.push(parseInt(getCookie("skill"+row.toString())));
+        }
+    }
+
+    let correct = stats.reduce((partialSum, a) => partialSum + a, 0);
+    let max = Math.max.apply(Math,stats);
+
+    for (let skill = 0; skill < 6; skill++) {
+        if (stats[skill] !== 0) {
+            skillBar = document.getElementById(`skill${skill+1}`);
+            skillBar.style.width = `${100*(stats[skill]/max)}%`;
+            skillBar.innerText = stats[skill].toString();
+        } else {
+            skillBar = document.getElementById(`skill${skill+1}`);
+            skillBar.style.width = `0%`;
+            skillBar.innerText = stats[skill].toString();
+        }
+    }
+
+    let playedStat = document.getElementById('playedStat');
+    let winStat = document.getElementById('winStat');
+    let winPStat = document.getElementById('winPStat');
+
+    playedStat.innerText = attempts;
+    winStat.innerText = correct;
+    winPStat.innerText = parseInt(100*(correct/attempts));
+
+    document.getElementById('winContentBlock').style.display = 'none';
+    document.getElementById('replay').innerText = 'Retry?';
+
+    showGameover();
+}
