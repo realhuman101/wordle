@@ -8,6 +8,11 @@
 
     </head>
     <body class="main">
+        <div class="navBar">
+            <a class="navLink logos"><img class="navLogo" src="media/wordleTitle.png" draggable="false"></a>
+            <button class="navStatLogo logos" onclick="showStats()"><img class="statLogo" src="media/statLogo.svg" draggable="false"></button>
+        </div>
+        <hr style="width: 100%; color:gray; visibility: visible;">
         <div class="container">
             <div class="letters">
                 <div class="row rows1">
@@ -91,7 +96,7 @@
             <div class="overContent">
                 <h1 id="maintxt"></h1>
                 <h3 id="subtxt"></h3>
-                <hr class="partStat" style="border:3px solid #f1f1f1">
+                <hr class="partStat" id="winContentBlock" style="border:3px solid #f1f1f1">
                 <div class="gameStats" id="gameStats">
                     <h2 class="statMainText">Statistics</h2>
                     <hr style="visibility:hidden; width: 100%">
