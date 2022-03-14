@@ -36,7 +36,7 @@
   background-color: rgba(0,0,0,0.4);
   text-align: center;
   margin: 0 auto;
-  animation-name: fadeIn;
+  animation-name: fadeIn1;
 	animation-iteration-count: 1;
 	animation-timing-function: ease-in;
 	animation-duration: 500ms;
@@ -50,10 +50,10 @@
   border: 1px solid #888;
   width: 35%;
   text-align: center;
-  animation-name: fadeIn;
+  animation-name: fadeIn2;
 	animation-iteration-count: 1;
 	animation-timing-function: ease-in;
-	animation-duration: 500ms;
+	animation-duration: 450ms;
 }
 
 .replay {
@@ -70,12 +70,23 @@
   --lightness-offset: 10%;
 }
 
-@keyframes fadeIn {
+@keyframes fadeIn1 {
 	0% {
 		opacity: 0;
 	}
 	100% {
 		opacity: 1;
+	}
+}
+
+@keyframes fadeIn2 {
+	0% {
+		opacity: 0;
+    transform: translate3d(0, -20%, 0);
+	}
+	100% {
+		opacity: 1;
+    transform: translate3d(0, 0, 0);
 	}
 }
 
