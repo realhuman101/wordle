@@ -28,16 +28,54 @@ document.addEventListener("keydown", function(e) {
     var keynum
 
     keynum = e.key;
-
-    if((/[a-zA-Z]/).test(keynum) == true && keynum.length == 1) {
-        inputCharacter(keynum);
-    } else if (keynum == "Enter") {
-        checkWord();
-    } else if (keynum == "Backspace"){
-        deleteChar();
+    if (playing) {
+        if((/[a-zA-Z]/).test(keynum) == true && keynum.length == 1) {
+            inputCharacter(keynum);
+        } else if (keynum == "Enter") {
+            checkWord();
+        } else if (keynum == "Backspace"){
+            deleteChar();
+        }
+    } else if (keynum == 'Enter') {
+        showGameover();
     }
 });
 
+// REGISTER KEYBOARD
+if (playing) {
+    var buttons = document.getElementsByClassName("key");
+    var buttonsCount = buttons.length;
+    for (var i = 0; i <= buttonsCount; i += 1) {
+        buttons[i].ontouchstart = setTimeout(function(e) {
+            char = this.id;
+            if (char == "Enter") {
+                checkWord();
+            } else if (char == "Backspace") {
+                deleteChar();
+            } else {
+                inputCharacter(char.toLowerCase());
+            }
+        }, 500);
+        buttons[i].onclick = function(e) {
+            char = this.id;
+            if (char == "Enter") {
+                checkWord();
+            } else if (char == "Backspace") {
+                deleteChar();
+            } else {
+                inputCharacter(char.toLowerCase());
+            }
+        };
+    }
+} else {
+    var enterKey = document.getElementById("Enter");
+    buttons[i].ontouchstart = setTimeout(function(e) {
+        showGameover();
+    }, 500);
+    buttons[i].onclick = function(e) {
+        showGameover();
+    };
+}
 
 // WRITE KEYS
 function inputCharacter (char) {
@@ -98,35 +136,6 @@ function resetRows () {
     }
     userWord = "";
     currentBox = undefined;
-}
-
-
-// REGISTER KEYBOARD
-if (playing) {
-    var buttons = document.getElementsByClassName("key");
-    var buttonsCount = buttons.length;
-    for (var i = 0; i <= buttonsCount; i += 1) {
-        buttons[i].ontouchstart = setTimeout(function(e) {
-            char = this.id;
-            if (char == "Enter") {
-                checkWord();
-            } else if (char == "Backspace") {
-                deleteChar();
-            } else {
-                inputCharacter(char.toLowerCase());
-            }
-        }, 500);
-        buttons[i].onclick = function(e) {
-            char = this.id;
-            if (char == "Enter") {
-                checkWord();
-            } else if (char == "Backspace") {
-                deleteChar();
-            } else {
-                inputCharacter(char.toLowerCase());
-            }
-        };
-    }
 }
 
 // CHECK WORD CORRECT
@@ -232,12 +241,11 @@ function getCookie(cname) {
     return undefined;
 }
 
-// GAME OVER STUFF
+// GAME OVER
 function gameOver (win) {
-    var gameover = document.getElementById("gameover");
     var maintext = document.getElementById("maintxt");
     var subtext = document.getElementById("subtxt");
-    var currentStats = currentRow.charAt(3);
+
     if (win) {
         maintext.innerHTML = "Congratulations! You won!";
         subtext.innerHTML = "Great job! You guessed the word!";
@@ -246,16 +254,25 @@ function gameOver (win) {
         subtext.innerHTML = `The word was ${word}... You'll get it next time!`;
     }
     setStats(win);
-    gameover.style.display = "block";
+    showGameover();
     playing = false;
 }
 
-document.getElementById('replay').onclick = function() {
-    replay();
-};
+document.getElementById('replay').onclick = replay();
 
 function replay() {
     location.reload();
+}
+
+document.getElementById('gameover').onclick = hideGameover();
+function hideGameover() {
+    var gameover = document.getElementById("gameover");
+    gameover.style.display = "none";
+}
+
+function showGameover() {
+    var gameover = document.getElementById("gameover");
+    gameover.style.display = "block";
 }
 
 // STATISTICS
