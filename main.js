@@ -292,6 +292,7 @@ function setStats (win) {
         for (let row = 1; row <= 6; row++) {
             if (typeof getCookie("skill"+row.toString()) == "undefined") {
                 setCookie("skill"+row.toString(),"0");
+                stats.push(0);
             } else {
                 stats.push(parseInt(getCookie("skill"+row.toString())));
             }
@@ -305,9 +306,15 @@ function setStats (win) {
         setCookie(`skill${tries}`,(stats[tries-1]).toString());
 
         for (let skill = 0; skill < 6; skill++) {
-            skillBar = document.getElementById(`skill${skill+1}`);
-            skillBar.style.width = `${100*(stats[skill]/max)}%`;
-            skillBar.innerText = stats[skill].toString();
+            if (stats[skill] !== 0) {
+                skillBar = document.getElementById(`skill${skill+1}`);
+                skillBar.style.width = `${100*(stats[skill]/max)}%`;
+                skillBar.innerText = stats[skill].toString();
+            } else {
+                skillBar = document.getElementById(`skill${skill+1}`);
+                skillBar.style.width = `0%`;
+                skillBar.innerText = stats[skill].toString();
+            }
         }
 
         let playedStat = document.getElementById('playedStat');
