@@ -11,6 +11,7 @@ var userWordChars;
 var currentBox;
 var currentRow;
 var playing;
+var statsSet;
 
 if (!setWord) {
     word = selection[Math.floor((Math.random() * selection.length))];
@@ -19,7 +20,7 @@ if (!setWord) {
     console.log("running");
     setWord = true;
     playing = true;
-
+    statsSet = false;
 }
 
 
@@ -140,83 +141,85 @@ function resetRows () {
 
 // CHECK WORD CORRECT
 function checkWord () {
-    if (userWord.length == 5 && data.includes(userWord)) {
-        if (userWord == word) {
-            for(let ind = 0; ind <= 5; ind++){
-                box = document.querySelectorAll(`.${currentRow}[name='${ind}']`);
-                for(var i = 0; i < box.length; i++){
-                    box[i].style.backgroundColor = "#6aaa64";   
-                    box[i].style.color = "white";
-                    box[i].style.border = "2px solid rgb(180, 180, 180)";
-                    box[i].classList.add("apply-dance");
-                }
-            }
-            gameOver(true);
-        } else {
-            var occurances = {};
-            var wordList = word.split("");
-            var userList = userWord.split("");
-            for (let ind = 0; ind < 5; ind++) {
-                occurances[wordList[ind]] = 0;
-            }
-            for (let ind = 0; ind < 5; ind++) {
-                occurances[wordList[ind]] = occurances[wordList[ind]] + 1;
-                keys = document.getElementById(userList[ind].toUpperCase());
-                box = document.querySelectorAll(`.${currentRow}[name='${ind+1}']`);
-                for (var i = 0; i < box.length; i++) {
-                    box[i].style.backgroundColor = "DarkGrey"; 
-                    if (!(keys.classList.contains("wrong-location"))) {
-                        keys.classList.add("wrong");  
-                    }
-                    box[i].style.color = "white";
-                }
-            }
-            for (let ind = 0; ind < 5; ind++) {
-                keys = document.getElementById(userList[ind].toUpperCase());
-                if (wordList[ind] == userList[ind] && occurances[wordList[ind]] > 0) {
-                    box = document.querySelectorAll(`.${currentRow}[name='${ind+1}']`);
+    if (playing) {
+        if (userWord.length == 5 && data.includes(userWord)) {
+            if (userWord == word) {
+                for(let ind = 0; ind <= 5; ind++){
+                    box = document.querySelectorAll(`.${currentRow}[name='${ind}']`);
                     for(var i = 0; i < box.length; i++){
                         box[i].style.backgroundColor = "#6aaa64";   
                         box[i].style.color = "white";
+                        box[i].style.border = "2px solid rgb(180, 180, 180)";
+                        box[i].classList.add("apply-dance");
+                    }
+                }
+                gameOver(true);
+            } else {
+                var occurances = {};
+                var wordList = word.split("");
+                var userList = userWord.split("");
+                for (let ind = 0; ind < 5; ind++) {
+                    occurances[wordList[ind]] = 0;
+                }
+                for (let ind = 0; ind < 5; ind++) {
+                    occurances[wordList[ind]] = occurances[wordList[ind]] + 1;
+                    keys = document.getElementById(userList[ind].toUpperCase());
+                    box = document.querySelectorAll(`.${currentRow}[name='${ind+1}']`);
+                    for (var i = 0; i < box.length; i++) {
+                        box[i].style.backgroundColor = "DarkGrey"; 
+                        if (!(keys.classList.contains("wrong-location"))) {
+                            keys.classList.add("wrong");  
+                        }
+                        box[i].style.color = "white";
+                    }
+                }
+                for (let ind = 0; ind < 5; ind++) {
+                    keys = document.getElementById(userList[ind].toUpperCase());
+                    if (wordList[ind] == userList[ind] && occurances[wordList[ind]] > 0) {
+                        box = document.querySelectorAll(`.${currentRow}[name='${ind+1}']`);
+                        for(var i = 0; i < box.length; i++){
+                            box[i].style.backgroundColor = "#6aaa64";   
+                            box[i].style.color = "white";
+                            if (keys.classList.contains("wrong")) {
+                                keys.classList.remove("wrong");
+                            }
+                            keys.classList.add("correct");
+                            occurances[wordList[ind]] = occurances[wordList[ind]] - 1;
+                        }
+                    } 
+                }
+                for (let ind = 0; ind < 5; ind++) {
+                    keys = document.getElementById(userList[ind].toUpperCase());
+                    if ((wordList.includes(userList[ind]) && occurances[userList[ind]] > 0) && userList[ind] !== wordList[ind]) {
+                        box = document.querySelectorAll(`.${currentRow}[name='${ind+1}']`);
+                        box[0].style.backgroundColor = "#c9b458";
+                        box[0].style.color = "white";
                         if (keys.classList.contains("wrong")) {
                             keys.classList.remove("wrong");
                         }
-                        keys.classList.add("correct");
-                        occurances[wordList[ind]] = occurances[wordList[ind]] - 1;
+                        keys.classList.add("wrong-location");
+                        occurances[userList[ind]] = occurances[userList[ind]] - 1;
                     }
-                } 
-            }
-            for (let ind = 0; ind < 5; ind++) {
-                keys = document.getElementById(userList[ind].toUpperCase());
-                if ((wordList.includes(userList[ind]) && occurances[userList[ind]] > 0) && userList[ind] !== wordList[ind]) {
+                }
+                for (let ind = 0; ind < 5; ind++) {
                     box = document.querySelectorAll(`.${currentRow}[name='${ind+1}']`);
-                    box[0].style.backgroundColor = "#c9b458";
-                    box[0].style.color = "white";
-                    if (keys.classList.contains("wrong")) {
-                        keys.classList.remove("wrong");
+                    for(var i = 0; i < box.length; i++){
+                        box[i].style.color = "white";
+                        box[i].style.border = "2px solid rgb(180, 180, 180)";
+                        box[i].classList.add('apply-flip');
                     }
-                    keys.classList.add("wrong-location");
-                    occurances[userList[ind]] = occurances[userList[ind]] - 1;
                 }
+                resetRows();
             }
-            for (let ind = 0; ind < 5; ind++) {
-                box = document.querySelectorAll(`.${currentRow}[name='${ind+1}']`);
-                for(var i = 0; i < box.length; i++){
-                    box[i].style.color = "white";
-                    box[i].style.border = "2px solid rgb(180, 180, 180)";
-                    box[i].classList.add('apply-flip');
-                }
-            }
-            resetRows();
+        } else if (userWord.length == 5) {
+            const row = document.querySelector(`.rows${currentRow.charAt(3)}`);
+
+            row.classList.add("apply-shake");
+
+            row.addEventListener("animationend", (e) => {
+                row.classList.remove("apply-shake");
+            });
         }
-    } else if (userWord.length == 5) {
-        const row = document.querySelector(`.rows${currentRow.charAt(3)}`);
-
-        row.classList.add("apply-shake");
-
-        row.addEventListener("animationend", (e) => {
-            row.classList.remove("apply-shake");
-        });
     }
 }
 
@@ -277,40 +280,43 @@ function showGameover() {
 
 // STATISTICS
 function setStats (win) {
-    var stats = []
-    if (typeof getCookie('attempts') == 'undefined') {
-        setCookie('attempts','1');
-        attempts = 1;
-    } else {
-        attempts = parseInt(getCookie('attempts')) + 1;
-        setCookie('attempts',attempts.toString());
-    }
-    for (let row = 1; row <= 6; row++) {
-        if (typeof getCookie("skill"+row.toString()) == "undefined") {
-            setCookie("skill"+row.toString(),"0");
+    if (!statsSet) {
+        var stats = []
+        if (typeof getCookie('attempts') == 'undefined') {
+            setCookie('attempts','1');
+            attempts = 1;
         } else {
-            stats.push(parseInt(getCookie("skill"+row.toString())));
+            attempts = parseInt(getCookie('attempts')) + 1;
+            setCookie('attempts',attempts.toString());
         }
-    }
-    let tries = parseInt(currentRow.charAt(3));
-    if(win) {
-        stats[tries-1] = parseInt(stats[tries-1])+1;
-    }
-    correct = stats.reduce((partialSum, a) => partialSum + a, 0);
-    max = Math.max.apply(Math,stats);
-    setCookie(`skill${tries}`,(stats[tries-1]).toString());
+        for (let row = 1; row <= 6; row++) {
+            if (typeof getCookie("skill"+row.toString()) == "undefined") {
+                setCookie("skill"+row.toString(),"0");
+            } else {
+                stats.push(parseInt(getCookie("skill"+row.toString())));
+            }
+        }
+        let tries = parseInt(currentRow.charAt(3));
+        if(win) {
+            stats[tries-1] = parseInt(stats[tries-1])+1;
+        }
+        correct = stats.reduce((partialSum, a) => partialSum + a, 0);
+        max = Math.max.apply(Math,stats);
+        setCookie(`skill${tries}`,(stats[tries-1]).toString());
 
-    for (let skill = 0; skill < 6; skill++) {
-        skillBar = document.getElementById(`skill${skill+1}`);
-        skillBar.style.width = `${100*(stats[skill]/max)}%`;
-        skillBar.innerText = stats[skill].toString();
+        for (let skill = 0; skill < 6; skill++) {
+            skillBar = document.getElementById(`skill${skill+1}`);
+            skillBar.style.width = `${100*(stats[skill]/max)}%`;
+            skillBar.innerText = stats[skill].toString();
+        }
+
+        let playedStat = document.getElementById('playedStat');
+        let winStat = document.getElementById('winStat');
+        let winPStat = document.getElementById('winPStat');
+
+        playedStat.innerText = attempts;
+        winStat.innerText = correct;
+        winPStat.innerText = parseInt(100*(correct/attempts));
+        statsSet = true;
     }
-
-    let playedStat = document.getElementById('playedStat');
-    let winStat = document.getElementById('winStat');
-    let winPStat = document.getElementById('winPStat');
-
-    playedStat.innerText = attempts;
-    winStat.innerText = correct;
-    winPStat.innerText = parseInt(100*(correct/attempts));
 }
