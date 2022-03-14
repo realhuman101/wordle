@@ -63,6 +63,7 @@
   text-align: center;
   color: white;
   border: none;
+  cursor: pointer;
 }
 
 .replay:hover, .replay:focus {
