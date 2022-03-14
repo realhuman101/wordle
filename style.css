@@ -42,7 +42,7 @@
   padding: 20px;
   border: 1px solid #888;
   width: 35%;
-  height: 200px;
+  height: 455px;
   text-align: center;
 }
 
@@ -196,6 +196,19 @@
       font-size: 30px;
     }
 }
+
+@media only screen
+  and (max-device-width: 1135px) {
+    .stats {
+      display: none !important;
+    }
+    .partStat {
+      display: none !important;
+    }
+    .overContent {
+      height: 200px !important;
+    }
+  }
   
 .key.large {
   grid-column: span 3 !important;
@@ -222,19 +235,42 @@
 }
 
 .stats {
-  box-sizing: border-box;
   display: none;
 }
 
 .bar {
-  width: 100%;
+  width: 80%;
+  padding-top: 0%;
+  margin: 0px;
+  padding-bottom: 0%;
+  display: inline-block;
   background-color: #ddd;
 }
 
 .skills {
   text-align: right;
-  padding-top: 10px;
-  padding-bottom: 10px; 
   color: white;
   background-color: #6aaa64;
+}
+
+.statTxt {
+  text-align: left;
+  width: 10px;
+  padding-right: 10px;
+  display: inline-block;
+  padding-top: 0%;
+  padding-bottom: 0%;
+  margin: 0px;
+}
+
+hr {
+  height: 0px;
+}
+
+.bold {
+  height: 5px !important;
+}
+
+.noZoom {
+  touch-action: manipulation;
 }
