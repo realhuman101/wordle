@@ -1,6 +1,70 @@
+html, body {
+  margin: 0; 
+  height: 100%; 
+  overflow: hidden
+}
+
 * {
   background-color: white;
   font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
+}
+
+.navBar {
+  position: relative;
+  width: 100%;
+  display: grid;
+  grid-template-columns: auto;
+  grid-column-start: 1;
+  grid-column-end: 3;
+  grid-row-start: 1;
+  grid-row-end: 1;
+  justify-content: space-between;
+  grid-template-columns: 50px 322.5px 50px;
+  height: 50px;
+  margin: 0;
+  padding: 0%;
+}
+
+.logos {
+  justify-content: center;
+  text-align: center;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -o-user-select: none;
+  user-select: none;
+  cursor: pointer;
+  padding: 0;
+  border: none;
+}
+
+.navLink {
+  grid-column: 2;
+  width: 100%;
+  position: relative;
+  text-align: center;
+}
+
+.navLogo {
+  height: 50px !important;
+  width: 322.5px !important;
+}
+
+.navStatLogo {
+  grid-column: 3;
+  position: relative;
+  width: 100%;
+  text-align: right;
+}
+
+.statLogo {
+  height: 30px;
+  width: 30px;
+  padding: 10px;
+}
+
+.letters {
+  padding-top: 0px;
 }
 
 .row {
@@ -177,10 +241,13 @@
 
 .keyboard {
   display: grid;
+  width: 100%;
+  margin: 0 auto;
   grid-template-columns: repeat(20, minmax(auto, 2em));
   grid-auto-rows: 3em;
   gap: .25em;
   justify-content: center;
+  text-align: center;
 }
 
 .key {
@@ -219,12 +286,19 @@
     .keyboard {
       grid-auto-rows: 9em;
       gap: .50em;
+      padding-bottom: 0px !important;
     }
     .ltr {
       width: 85px;
     }
     .key {
       font-size: 30px;
+    }
+    .container {
+      padding-top: 0px;
+    }
+    .navBar {
+      display: none;
     }
 }
 
