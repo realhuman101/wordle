@@ -216,26 +216,6 @@
     }
 }
 
-@media only screen
-  and (max-device-width: 1135px) {
-    .stats {
-      display: none !important;
-    }
-    .partStat {
-      display: none !important;
-    }
-}
-
-@media only screen
-  and (min-device-width: 1136px) {
-    .stats {
-      display: block;
-    }
-    .partStat {
-      display: block;
-    }
-}
-
 .key.large {
   grid-column: span 3 !important;
 }
@@ -284,6 +264,46 @@
   padding-bottom: 0%;
   margin: 0px;
 }
+
+.gameStats {
+  display: block;
+}
+
+.stat-container {
+  flex: 1;
+  display: block;
+  position: relative;
+}
+
+.statMainText {
+  text-align: center;
+  width: 100%;
+  padding-bottom: 0%;
+  height: 20px;
+  position: relative;
+}
+
+.statContent {
+  position: relative;
+  display: flex;
+}
+
+.statNum {
+  text-align: center;
+  font-size: 36px;
+  font-weight: 400;
+  letter-spacing: 0.05em;
+  justify-content: center;
+}
+
+.statLabel {
+  font-size: 12px;
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
 
 hr {
   height: 0px;
