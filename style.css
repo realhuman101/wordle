@@ -43,12 +43,8 @@ html, body {
   width: 100%;
   position: relative;
   text-align: center;
-}
-
-.navLogo {
-  align-self: center;
-  height: 50px !important;
-  width: 322.5px !important;
+  font-size: 45px;
+  font-weight: bold;
 }
 
 .navStatLogo {
