@@ -470,5 +470,12 @@ function showStats () {
     document.getElementById('winContentBlock').style.display = 'none';
     document.getElementById('replay').innerText = 'Retry?';
 
+    if (!playing) {
+        document.getElementById("maintxt").style.display = 'block';
+        document.getElementById("subtxt").style.display = 'block';
+        document.getElementById('winContentBlock').style.display = 'block';
+        document.getElementById('replay').innerText = 'Play Again?';
+    }
+
     showGameover();
 }
