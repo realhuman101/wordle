@@ -33,7 +33,6 @@ html, body {
   -moz-user-select: none;
   -o-user-select: none;
   user-select: none;
-  pointer-events: none;
   cursor: pointer;
   padding: 0;
   border: none;
