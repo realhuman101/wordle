@@ -3,12 +3,14 @@
     <head>
         <link rel="stylesheet" href="style.css">
         <link rel="icon" type="image/x-icon" href="media/icon.webp">
+        <script src="words.js"></script>
         <title>WORDLE</title>
         <meta name="viewport">
 
     </head>
     <body class="main">
         <div class="navBar">
+            <button class="navSettingLogo logos" onclick="showSettings()"><img class="settingLogo" src="media/settingLogo.svg" draggable="false"></button>
             <a class="navLink logos" onclick="replay()">W  O  R  D  L  E</a>
             <button class="navStatLogo logos" onclick="showStats()"><img class="statLogo" src="media/statLogo.svg" draggable="false"></button>
         </div>
@@ -21,6 +23,11 @@
                     <div class="rowBox row1" name="3"></div>
                     <div class="rowBox row1" name="4"></div>
                     <div class="rowBox row1" name="5"></div>
+                    <div class="rowBox row1" name="6" style="display: none;"></div>
+                    <div class="rowBox row1" name="7" style="display: none;"></div>
+                    <div class="rowBox row1" name="8" style="display: none;"></div>
+                    <div class="rowBox row1" name="9" style="display: none;"></div>
+                    <div class="rowBox row1" name="10" style="display: none;"></div>
                 </div>
                 <div class="row rows2">
                     <div class="rowBox row2" name="1"></div>
@@ -28,6 +35,11 @@
                     <div class="rowBox row2" name="3"></div>
                     <div class="rowBox row2" name="4"></div>
                     <div class="rowBox row2" name="5"></div>
+                    <div class="rowBox row2" name="6" style="display: none;"></div>
+                    <div class="rowBox row2" name="7" style="display: none;"></div>
+                    <div class="rowBox row2" name="8" style="display: none;"></div>
+                    <div class="rowBox row2" name="9" style="display: none;"></div>
+                    <div class="rowBox row2" name="10" style="display: none;"></div>
                 </div>
                 <div class="row rows3">
                     <div class="rowBox row3" name="1"></div>
@@ -35,6 +47,11 @@
                     <div class="rowBox row3" name="3"></div>
                     <div class="rowBox row3" name="4"></div>
                     <div class="rowBox row3" name="5"></div>
+                    <div class="rowBox row3" name="6" style="display: none;"></div>
+                    <div class="rowBox row3" name="7" style="display: none;"></div>
+                    <div class="rowBox row3" name="8" style="display: none;"></div>
+                    <div class="rowBox row3" name="9" style="display: none;"></div>
+                    <div class="rowBox row3" name="10" style="display: none;"></div>
                 </div>
                 <div class="row rows4">
                     <div class="rowBox row4" name="1"></div>
@@ -42,6 +59,11 @@
                     <div class="rowBox row4" name="3"></div>
                     <div class="rowBox row4" name="4"></div>
                     <div class="rowBox row4" name="5"></div>
+                    <div class="rowBox row4" name="6" style="display: none;"></div>
+                    <div class="rowBox row4" name="7" style="display: none;"></div>
+                    <div class="rowBox row4" name="8" style="display: none;"></div>
+                    <div class="rowBox row4" name="9" style="display: none;"></div>
+                    <div class="rowBox row4" name="10" style="display: none;"></div>
                 </div>
                 <div class="row rows5">
                     <div class="rowBox row5" name="1"></div>
@@ -49,6 +71,11 @@
                     <div class="rowBox row5" name="3"></div>
                     <div class="rowBox row5" name="4"></div>
                     <div class="rowBox row5" name="5"></div>
+                    <div class="rowBox row5" name="6" style="display: none;"></div>
+                    <div class="rowBox row5" name="7" style="display: none;"></div>
+                    <div class="rowBox row5" name="8" style="display: none;"></div>
+                    <div class="rowBox row5" name="9" style="display: none;"></div>
+                    <div class="rowBox row5" name="10" style="display: none;"></div>
                 </div>
                 <div class="row rows6">
                     <div class="rowBox row6" name="1"></div>
@@ -56,9 +83,16 @@
                     <div class="rowBox row6" name="3"></div>
                     <div class="rowBox row6" name="4"></div>
                     <div class="rowBox row6" name="5"></div>
+                    <div class="rowBox row6" name="6" style="display: none;"></div>
+                    <div class="rowBox row6" name="7" style="display: none;"></div>
+                    <div class="rowBox row6" name="8" style="display: none;"></div>
+                    <div class="rowBox row6" name="9" style="display: none;"></div>
+                    <div class="rowBox row6" name="10" style="display: none;"></div>
                 </div>
             </div>
         </div>
+        <br class="break">
+        <h4 class="notWord" id="notWord">Word not in word list</h4>
         <br class="break">
         <div class="keyboard">
             <button class="key ltr noZoom" id="Q">Q</button>
@@ -151,6 +185,21 @@
                 </div>
                 <hr style="visibility:hidden" class="bold partStat">
                 <button class="replay" id="replay" onclick="replay()">Play Again?</button>
+            </div>
+        </div>
+        <div class="settings" id="settings">
+            <div class="settingContent" id="settingContent">
+                <h1>Settings</h1>
+                <hr class="partSet" style="border:3px solid #f1f1f1">
+                <h2>Length of Word</h2>
+                <div class="lenConTxt" id="lenConTxt"></div>
+                <div class="selLenCon" id="selLenCon">
+                    <input type="range" min="5" max="10" value="5" class="selLen" id="lengthSelect">
+                </div>
+            </div>
+            <div class="noSetting" id="noSetting">
+                <h1>Sorry for the inconvenience!</h1>
+                <h3>You cannot change your settings in the middle of a game...</h3>
             </div>
         </div>
         <script src="main.js"></script>
