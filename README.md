@@ -1,7 +1,10 @@
 # wordle
 My wordle clone
 
+
 Very bad javascript lol
+
+
 
 Features:
 - Can change the length of word
