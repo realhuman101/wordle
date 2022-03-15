@@ -356,20 +356,31 @@ function showGameover() {
 // STATISTICS
 function setStats (win) {
     if (!statsSet) {
+        attemptTxt = ''
+        skillTxt = ''
+        if (letters == 5) {
+            attemptTxt = 'attempts';
+            skillTxt = "skill";
+            document.getElementById('statText').innerText = 'Statistics';
+        } else {
+            attemptTxt = letters.toString()+'attempts';
+            skillTxt = letters.toString()+"skill";
+            document.getElementById('statText').innerText = 'Statistics for '+letters.toString()+" letters";
+        }
         var stats = []
-        if (typeof getCookie('attempts') == 'undefined') {
-            setCookie('attempts','1');
+        if (typeof getCookie(attemptTxt) == 'undefined') {
+            setCookie(attemptTxt,'1');
             attempts = 1;
         } else {
-            attempts = parseInt(getCookie('attempts')) + 1;
-            setCookie('attempts',attempts.toString());
+            attempts = parseInt(getCookie(attemptTxt)) + 1;
+            setCookie(attemptTxt,attempts.toString());
         }
         for (let row = 1; row <= 6; row++) {
-            if (typeof getCookie("skill"+row.toString()) == "undefined") {
-                setCookie("skill"+row.toString(),"0");
+            if (typeof getCookie(skillTxt+row.toString()) == "undefined") {
+                setCookie(skillTxt+row.toString(),"0");
                 stats.push(0);
             } else {
-                stats.push(parseInt(getCookie("skill"+row.toString())));
+                stats.push(parseInt(getCookie(skillTxt+row.toString())));
             }
         }
         let tries = parseInt(currentRow.charAt(3));
@@ -378,7 +389,7 @@ function setStats (win) {
         }
         correct = stats.reduce((partialSum, a) => partialSum + a, 0);
         max = Math.max.apply(Math,stats);
-        setCookie(`skill${tries}`,(stats[tries-1]).toString());
+        setCookie(`${skillTxt}${tries}`,(stats[tries-1]).toString());
 
         for (let skill = 0; skill < 6; skill++) {
             if (stats[skill] !== 0) {
@@ -392,6 +403,8 @@ function setStats (win) {
             }
         }
 
+        document.getElementById('winContentBlock').style.display = 'block';
+
         let playedStat = document.getElementById('playedStat');
         let winStat = document.getElementById('winStat');
         let winPStat = document.getElementById('winPStat');
@@ -404,19 +417,30 @@ function setStats (win) {
 }
 
 function showStats () {
+    attemptTxt = ''
+    skillTxt = ''
+    if (letters == 5) {
+        attemptTxt = 'attempts';
+        skillTxt = "skill";
+        document.getElementById('statText').innerText = 'Statistics';
+    } else {
+        attemptTxt = letters.toString()+'attempts';
+        skillTxt = letters.toString()+"skill";
+        document.getElementById('statText').innerText = 'Statistics for '+letters.toString()+" letters";
+    }
     var stats = [];
-    if (typeof getCookie('attempts') == 'undefined') {
-        setCookie('attempts','0');
+    if (typeof getCookie(attemptTxt) == 'undefined') {
+        setCookie(attemptTxt,'0');
         attempts = 0;
     } else {
-        attempts = parseInt(getCookie('attempts'));
+        attempts = parseInt(getCookie(attemptTxt));
     }
     for (let row = 1; row <= 6; row++) {
-        if (typeof getCookie("skill"+row.toString()) == "undefined") {
-            setCookie("skill"+row.toString(),"0");
+        if (typeof getCookie(skillTxt+row.toString()) == "undefined") {
+            setCookie(skillTxt+row.toString(),"0");
             stats.push(0);
         } else {
-            stats.push(parseInt(getCookie("skill"+row.toString())));
+            stats.push(parseInt(getCookie(skillTxt+row.toString())));
         }
     }
 
