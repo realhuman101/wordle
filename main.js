@@ -213,6 +213,7 @@ function resetRows () {
 // CHECK WORD CORRECT
 function checkWord () {
     if (playing) {
+        userWord = userWord.toLowerCase();
         if (userWord.length == letters && data.includes(userWord)) {
             if (userWord == word) {
                 for(let ind = 0; ind <= letters; ind++){
