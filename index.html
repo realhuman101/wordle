@@ -6,6 +6,7 @@
         <script src="words.js"></script>
         <title>WORDLE</title>
         <meta name="viewport">
+
     </head>
     <body class="main">
         <div class="navBar">
@@ -91,7 +92,7 @@
             </div>
         </div>
         <br class="break">
-        <h4 class="notWord" id="notWord">Word not in word list</h4>
+        <h4 class="notWord" id="warning">Word not in word list</h4>
         <br class="break">
         <div class="keyboard">
             <button class="key ltr noZoom" id="Q">Q</button>
@@ -195,6 +196,12 @@
                 <div class="selLenCon" id="selLenCon">
                     <input type="range" min="5" max="10" value="5" class="selLen" id="lengthSelect">
                 </div>
+                <hr class="partSet" style="border:3px solid #f1f1f1">
+                <h2>Hard Mode</h2>
+                <label class="difficulty">
+                    <input type="checkbox" id="hardMode">
+                    <span class="hardSelect hardRound"></span>  
+                </label>
             </div>
             <div class="noSetting" id="noSetting">
                 <h1>Sorry for the inconvenience!</h1>
