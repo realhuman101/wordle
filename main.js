@@ -411,7 +411,7 @@ function hardmodeCheck() {
     var userList = userWord.split('');
     
     for (let ind = 0; ind < letters; ind++) {
-        if ((correctChars.map(b=>b[1])).includes(userList[ind]) && ind == correctChars[correctChars.map(b=>b[1]).indexOf(userList[ind])][0]) {
+        if ((correctChars.map(b=>b[1])).includes(userList[ind]) && ind !== correctChars[correctChars.map(b=>b[1]).indexOf(userList[ind])][0]) {
             return true;
         } else if ((wrongPlace.map(b=>b[1])).includes(userList[ind]) && ind == wrongPlace[wrongPlace.map(b=>b[1]).indexOf(userList[ind])][0]) {
             return true;
