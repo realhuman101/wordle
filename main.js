@@ -247,7 +247,6 @@ function checkWord () {
                     for (let ind = 0; ind < letters; ind++) {
                         occurances[wordList[ind]] = 0;
                     }
-                    console.log(`Words: ${wordList}\nUser Word: ${userList}`)
                     for (let ind = 0; ind < letters; ind++) {
                         occurances[wordList[ind]] = occurances[wordList[ind]] + 1;
                         keys = document.getElementById(userList[ind].toUpperCase());
@@ -271,7 +270,6 @@ function checkWord () {
                                     keys.classList.remove("wrong");
                                 }
                                 keys.classList.add("correct");
-                                console.log('correct')
                                 occurances[wordList[ind]] = occurances[wordList[ind]] - 1;
                             }
                         } 
@@ -299,7 +297,6 @@ function checkWord () {
                         }
                     }
                     resetRows();
-                    console.log(occurances)
                 }
             } else {
                 if (userWord == word) {
