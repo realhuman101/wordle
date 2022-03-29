@@ -409,11 +409,22 @@ function checkWord () {
 
 function hardmodeCheck() {
     var userList = userWord.split('');
-
+    
     for (let ind = 0; ind < letters; ind++) {
         if ((correctChars.map(b=>b[1])).includes(userList[ind]) && ind == correctChars[correctChars.map(b=>b[1]).indexOf(userList[ind])][0]) {
             return true;
-        } else if ((wrongPlace.map(b=>b[1])).includes(userList[ind]) && ind !== wrongPlace[wrongPlace.map(b=>b[1]).indexOf(userList[ind])][0]) {
+        } else if ((wrongPlace.map(b=>b[1])).includes(userList[ind]) && ind == wrongPlace[wrongPlace.map(b=>b[1]).indexOf(userList[ind])][0]) {
+            return true;
+        }
+    }
+
+    for (let ind = 0; ind < wrongPlace.length; ind++) {
+        if (!(userList.includes(wrongPlace.map(b=>b[1])[ind]))) {
+            return true;
+        }
+    }
+    for (let ind = 0; ind < correctChars.length; ind++) {
+        if (!(userList.includes(correctChars.map(b=>b[1])[ind]))) {
             return true;
         }
     }
