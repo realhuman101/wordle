@@ -310,7 +310,7 @@ function checkWord () {
                     var occurances = {};
                     var wordList = word.split("");
                     var userList = userWord.split("");
-                    if (!(hardmodeCheck())) {
+                    if (hardmodeCheck()) {
                         var warning = document.getElementById('warning');
                         warning.innerText = 'Hard mode is enabled | Your word does not fit the requirements';
                         warning.style.visibility = 'visible';
@@ -404,14 +404,14 @@ function hardmodeCheck() {
     var userList = userWord.split('');
 
     for (let ind = 0; ind < letters; ind++) {
-        if (correctChars.map(b=>b[1]).contains(userList[ind]) && ind == correctChars[correctChars.map(b=>b[1]).indexOf(userList[ind])][0]) {
-            return false;
-        } else if (wrongPlace.map(b=>b[1]).contains(userList[ind]) && ind !== wrongPlace[wrongPlace.map(b=>b[1]).indexOf(userList[ind])][0]) {
-            return false;
+        if ((correctChars.map(b=>b[1])).contains(userList[ind]) && ind == correctChars[correctChars.map(b=>b[1]).indexOf(userList[ind])][0]) {
+            return true;
+        } else if ((wrongPlace.map(b=>b[1])).contains(userList[ind]) && ind !== wrongPlace[wrongPlace.map(b=>b[1]).indexOf(userList[ind])][0]) {
+            return true;
         }
     }
 
-    return true;
+    return false;
 }
 
 // COOKIE FUNCTIONS
