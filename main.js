@@ -493,13 +493,25 @@ function setStats (win) {
         attemptTxt = ''
         skillTxt = ''
         if (letters == 5) {
-            attemptTxt = 'attempts';
-            skillTxt = "skill";
-            document.getElementById('statText').innerText = 'Statistics';
+            if (!hardMode) {
+                attemptTxt = 'attempts';
+                skillTxt = "skill";
+                document.getElementById('statText').innerText = 'Statistics';
+            } else {
+                attemptTxt = 'HARDattempts';
+                skillTxt = "HARDskill";
+                document.getElementById('statText').innerText = 'Statistics for Hard Mode';
+            }
         } else {
-            attemptTxt = letters.toString()+'attempts';
-            skillTxt = letters.toString()+"skill";
-            document.getElementById('statText').innerText = 'Statistics for '+letters.toString()+" letters";
+            if (!hardMode) {
+                attemptTxt = letters.toString()+'attempts';
+                skillTxt = letters.toString()+"skill";
+                document.getElementById('statText').innerText = 'Statistics for '+letters.toString()+" letters";
+            } else {
+                attemptTxt = "HARD"+letters.toString()+'attempts';
+                skillTxt = "HARD"+letters.toString()+"skill";
+                document.getElementById('statText').innerText = 'Statistics for Hard Mode, with '+letters.toString()+" letters";
+            }
         }
         var stats = []
         if (typeof getCookie(attemptTxt) == 'undefined') {
@@ -554,13 +566,25 @@ function showStats () {
     attemptTxt = ''
     skillTxt = ''
     if (letters == 5) {
-        attemptTxt = 'attempts';
-        skillTxt = "skill";
-        document.getElementById('statText').innerText = 'Statistics';
+        if (!hardMode) {
+            attemptTxt = 'attempts';
+            skillTxt = "skill";
+            document.getElementById('statText').innerText = 'Statistics';
+        } else {
+            attemptTxt = 'HARDattempts';
+            skillTxt = "HARDskill";
+            document.getElementById('statText').innerText = 'Statistics for Hard Mode';
+        }
     } else {
-        attemptTxt = letters.toString()+'attempts';
-        skillTxt = letters.toString()+"skill";
-        document.getElementById('statText').innerText = 'Statistics for '+letters.toString()+" letters";
+        if (!hardMode) {
+            attemptTxt = letters.toString()+'attempts';
+            skillTxt = letters.toString()+"skill";
+            document.getElementById('statText').innerText = 'Statistics for '+letters.toString()+" letters";
+        } else {
+            attemptTxt = "HARD"+letters.toString()+'attempts';
+            skillTxt = "HARD"+letters.toString()+"skill";
+            document.getElementById('statText').innerText = 'Statistics for Hard Mode, with '+letters.toString()+" letters";
+        }
     }
     var stats = [];
     if (typeof getCookie(attemptTxt) == 'undefined') {
