@@ -8,6 +8,9 @@ var userWord;
 var userWordChars;
 var currentBox;
 var currentRow;
+var hardMode;
+var correctChars;
+var wrongPlace;
 var playing;
 var settingShow;
 var statsSet;
@@ -22,8 +25,12 @@ if (!setWord) {
     wordChars = word.split("");
     userWord = "";
 
+    correctChars = [];
+    wrongPlace = [];
+
     console.log("running");
 
+    hardMode = false;
     playing = true;
     settingShow = false;
     started = false;
@@ -46,18 +53,20 @@ function showSettings () {
     }
 }
 
-window.addEventListener('click', function(e){   
-    if (settingShow) {
-        if (document.getElementById('settings') == e.target){
-            document.getElementById('settings').style.display = 'none';
-            settingShow = false;
+['click','ontouchstart'].forEach( function(evt) {
+    window.addEventListener(evt, function(e){   
+        if (settingShow) {
+            if (document.getElementById('settings') == e.target){
+                document.getElementById('settings').style.display = 'none';
+                settingShow = false;
+            }
         }
-    }
-    if (document.getElementById('gameover').style.display == 'block') {
-        if (document.getElementById('gameover') == e.target){
-            document.getElementById('gameover').style.display = 'none';
+        if (document.getElementById('gameover').style.display == 'block') {
+            if (document.getElementById('gameover') == e.target){
+                document.getElementById('gameover').style.display = 'none';
+            }
         }
-    }
+    });
 });
 
 document.getElementById('lengthSelect').oninput = function () {
@@ -93,6 +102,10 @@ document.getElementById('lengthSelect').oninput = function () {
             theRows[item].style.display = 'none';
         }
     }
+}
+
+document.getElementById('hardMode').oninput = function () {
+    hardMode = document.getElementById('hardMode').checked;
 }
 
 
@@ -215,76 +228,171 @@ function checkWord () {
     if (playing) {
         userWord = userWord.toLowerCase();
         if (userWord.length == letters && data.includes(userWord)) {
-            if (userWord == word) {
-                for(let ind = 0; ind <= letters; ind++){
-                    box = document.querySelectorAll(`.${currentRow}[name='${ind}']`);
-                    for(var i = 0; i < box.length; i++){
-                        box[i].style.backgroundColor = "#6aaa64";   
-                        box[i].style.color = "white";
-                        box[i].style.border = "2px solid rgb(180, 180, 180)";
-                        box[i].classList.add("apply-dance");
-                    }
-                }
-                gameOver(true);
-            } else {
-                var occurances = {};
-                var wordList = word.split("");
-                var userList = userWord.split("");
-                for (let ind = 0; ind < letters; ind++) {
-                    occurances[wordList[ind]] = 0;
-                }
-                for (let ind = 0; ind < letters; ind++) {
-                    occurances[wordList[ind]] = occurances[wordList[ind]] + 1;
-                    keys = document.getElementById(userList[ind].toUpperCase());
-                    box = document.querySelectorAll(`.${currentRow}[name='${ind+1}']`);
-                    for (var i = 0; i < box.length; i++) {
-                        box[i].style.backgroundColor = "DarkGrey"; 
-                        if (!(keys.classList.contains("wrong-location"))) {
-                            keys.classList.add("wrong");  
-                        }
-                        box[i].style.color = "white";
-                    }
-                }
-                for (let ind = 0; ind < letters; ind++) {
-                    keys = document.getElementById(userList[ind].toUpperCase());
-                    if (wordList[ind] == userList[ind] && occurances[wordList[ind]] > 0) {
-                        box = document.querySelectorAll(`.${currentRow}[name='${ind+1}']`);
+            if (!hardMode) {
+                if (userWord == word) {
+                    for(let ind = 0; ind <= letters; ind++){
+                        box = document.querySelectorAll(`.${currentRow}[name='${ind}']`);
                         for(var i = 0; i < box.length; i++){
                             box[i].style.backgroundColor = "#6aaa64";   
                             box[i].style.color = "white";
+                            box[i].style.border = "2px solid rgb(180, 180, 180)";
+                            box[i].classList.add("apply-dance");
+                        }
+                    }
+                    gameOver(true);
+                } else {
+                    var occurances = {};
+                    var wordList = word.split("");
+                    var userList = userWord.split("");
+                    for (let ind = 0; ind < letters; ind++) {
+                        occurances[wordList[ind]] = 0;
+                    }
+                    for (let ind = 0; ind < letters; ind++) {
+                        occurances[wordList[ind]] = occurances[wordList[ind]] + 1;
+                        keys = document.getElementById(userList[ind].toUpperCase());
+                        box = document.querySelectorAll(`.${currentRow}[name='${ind+1}']`);
+                        for (var i = 0; i < box.length; i++) {
+                            box[i].style.backgroundColor = "DarkGrey"; 
+                            if (!(keys.classList.contains("wrong-location"))) {
+                                keys.classList.add("wrong");  
+                            }
+                            box[i].style.color = "white";
+                        }
+                    }
+                    for (let ind = 0; ind < letters; ind++) {
+                        keys = document.getElementById(userList[ind].toUpperCase());
+                        if (wordList[ind] == userList[ind] && occurances[wordList[ind]] > 0) {
+                            box = document.querySelectorAll(`.${currentRow}[name='${ind+1}']`);
+                            for(var i = 0; i < box.length; i++){
+                                box[i].style.backgroundColor = "#6aaa64";   
+                                box[i].style.color = "white";
+                                if (keys.classList.contains("wrong")) {
+                                    keys.classList.remove("wrong");
+                                }
+                                keys.classList.add("correct");
+                                occurances[wordList[ind]] = occurances[wordList[ind]] - 1;
+                            }
+                        } 
+                    }
+                    for (let ind = 0; ind < letters; ind++) {
+                        keys = document.getElementById(userList[ind].toUpperCase());
+                        if ((wordList.includes(userList[ind]) && occurances[userList[ind]] > 0) && userList[ind] !== wordList[ind]) {
+                            box = document.querySelectorAll(`.${currentRow}[name='${ind+1}']`);
+                            box[0].style.backgroundColor = "#c9b458";
+                            box[0].style.color = "white";
                             if (keys.classList.contains("wrong")) {
                                 keys.classList.remove("wrong");
                             }
-                            keys.classList.add("correct");
-                            occurances[wordList[ind]] = occurances[wordList[ind]] - 1;
+                            keys.classList.add("wrong-location");
+                            console.log('correct')
+                            occurances[userList[ind]] = occurances[userList[ind]] - 1;
                         }
-                    } 
-                }
-                for (let ind = 0; ind < letters; ind++) {
-                    keys = document.getElementById(userList[ind].toUpperCase());
-                    if ((wordList.includes(userList[ind]) && occurances[userList[ind]] > 0) && userList[ind] !== wordList[ind]) {
+                    }
+                    for (let ind = 0; ind < letters; ind++) {
                         box = document.querySelectorAll(`.${currentRow}[name='${ind+1}']`);
-                        box[0].style.backgroundColor = "#c9b458";
-                        box[0].style.color = "white";
-                        if (keys.classList.contains("wrong")) {
-                            keys.classList.remove("wrong");
+                        for(var i = 0; i < box.length; i++){
+                            box[i].style.color = "white";
+                            box[i].style.border = "2px solid rgb(180, 180, 180)";
+                            box[i].classList.add('apply-flip');
                         }
-                        keys.classList.add("wrong-location");
-                        occurances[userList[ind]] = occurances[userList[ind]] - 1;
+                    }
+                    resetRows();
+                }
+            } else {
+                if (userWord == word) {
+                    for(let ind = 0; ind <= letters; ind++){
+                        box = document.querySelectorAll(`.${currentRow}[name='${ind}']`);
+                        for(var i = 0; i < box.length; i++){
+                            box[i].style.backgroundColor = "#6aaa64";   
+                            box[i].style.color = "white";
+                            box[i].style.border = "2px solid rgb(180, 180, 180)";
+                            box[i].classList.add("apply-dance");
+                        }
+                    }
+                    gameOver(true);
+                } else {
+                    var occurances = {};
+                    var wordList = word.split("");
+                    var userList = userWord.split("");
+                    for (let ind = 0; ind < letters; ind++) {
+                        occurances[wordList[ind]] = 0;
+                    }
+                    if (hardmodeCheck()) {
+                        var warning = document.getElementById('warning');
+                        warning.innerText = 'Hard mode is enabled | Your word does not fit the requirements';
+                        warning.style.visibility = 'visible';
+                        const row = document.querySelector(`.rows${currentRow.charAt(3)}`);
+
+                        row.classList.add("apply-shake");
+
+                        row.addEventListener("animationend", (e) => {
+                            row.classList.remove("apply-shake");
+                        });
+                        setTimeout( function() {
+                            warning.style.visibility = 'hidden';
+                            warning.innerText = 'Word not in word list';
+                        },1000);
+                        return;
+                    } else {
+                        for (let ind = 0; ind < letters; ind++) {
+                            occurances[wordList[ind]] = 0;
+                        }
+                        for (let ind = 0; ind < letters; ind++) {
+                            occurances[wordList[ind]] = occurances[wordList[ind]] + 1;
+                            keys = document.getElementById(userList[ind].toUpperCase());
+                            box = document.querySelectorAll(`.${currentRow}[name='${ind+1}']`);
+                            for (var i = 0; i < box.length; i++) {
+                                box[i].style.backgroundColor = "DarkGrey"; 
+                                if (!(keys.classList.contains("wrong-location"))) {
+                                    keys.classList.add("wrong");  
+                                }
+                                box[i].style.color = "white";
+                            }
+                        }
+                        for (let ind = 0; ind < letters; ind++) {
+                            keys = document.getElementById(userList[ind].toUpperCase());
+                            if (wordList[ind] == userList[ind] && occurances[wordList[ind]] > 0) {
+                                box = document.querySelectorAll(`.${currentRow}[name='${ind+1}']`);
+                                for(var i = 0; i < box.length; i++){
+                                    box[i].style.backgroundColor = "#6aaa64";   
+                                    box[i].style.color = "white";
+                                    if (keys.classList.contains("wrong")) {
+                                        keys.classList.remove("wrong");
+                                    }
+                                    keys.classList.add("correct");
+                                    correctChars.push([ind,wordList[ind]]);
+                                    occurances[wordList[ind]] = occurances[wordList[ind]] - 1;
+                                }
+                            } 
+                        }
+                        for (let ind = 0; ind < letters; ind++) {
+                            keys = document.getElementById(userList[ind].toUpperCase());
+                            if ((wordList.includes(userList[ind]) && occurances[userList[ind]] > 0) && userList[ind] !== wordList[ind]) {
+                                box = document.querySelectorAll(`.${currentRow}[name='${ind+1}']`);
+                                box[0].style.backgroundColor = "#c9b458";
+                                box[0].style.color = "white";
+                                if (keys.classList.contains("wrong")) {
+                                    keys.classList.remove("wrong");
+                                }
+                                keys.classList.add("wrong-location");
+                                wrongPlace.push([ind,userList[ind]]);
+                                occurances[userList[ind]] = occurances[userList[ind]] - 1;
+                            }
+                        }
+                        for (let ind = 0; ind < letters; ind++) {
+                            box = document.querySelectorAll(`.${currentRow}[name='${ind+1}']`);
+                            for(var i = 0; i < box.length; i++){
+                                box[i].style.color = "white";
+                                box[i].style.border = "2px solid rgb(180, 180, 180)";
+                                box[i].classList.add('apply-flip');
+                            }
+                        }
+                        resetRows();
                     }
                 }
-                for (let ind = 0; ind < letters; ind++) {
-                    box = document.querySelectorAll(`.${currentRow}[name='${ind+1}']`);
-                    for(var i = 0; i < box.length; i++){
-                        box[i].style.color = "white";
-                        box[i].style.border = "2px solid rgb(180, 180, 180)";
-                        box[i].classList.add('apply-flip');
-                    }
-                }
-                resetRows();
             }
         } else if (userWord.length == letters) {
-            document.getElementById('notWord').style.visibility = 'visible';
+            document.getElementById('warning').style.visibility = 'visible';
             const row = document.querySelector(`.rows${currentRow.charAt(3)}`);
 
             row.classList.add("apply-shake");
@@ -293,10 +401,35 @@ function checkWord () {
                 row.classList.remove("apply-shake");
             });
             setTimeout( function() {
-                document.getElementById('notWord').style.visibility = 'hidden'
+                document.getElementById('warning').style.visibility = 'hidden'
             },1000);
         }
     }
+}
+
+function hardmodeCheck() {
+    var userList = userWord.split('');
+    
+    for (let ind = 0; ind < letters; ind++) {
+        if ((correctChars.map(b=>b[1])).includes(userList[ind]) && ind == correctChars[correctChars.map(b=>b[1]).indexOf(userList[ind])][0]) {
+            return true;
+        } else if ((wrongPlace.map(b=>b[1])).includes(userList[ind]) && ind == wrongPlace[wrongPlace.map(b=>b[1]).indexOf(userList[ind])][0]) {
+            return true;
+        }
+    }
+
+    for (let ind = 0; ind < wrongPlace.length; ind++) {
+        if (!(userList.includes(wrongPlace.map(b=>b[1])[ind]))) {
+            return true;
+        }
+    }
+    for (let ind = 0; ind < correctChars.length; ind++) {
+        if (!(userList.includes(correctChars.map(b=>b[1])[ind]))) {
+            return true;
+        }
+    }
+
+    return false;
 }
 
 // COOKIE FUNCTIONS
