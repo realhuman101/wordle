@@ -335,9 +335,9 @@ function checkWord () {
                     for (let ind = 0; ind < letters; ind++) {
                         occurances[wordList[ind]] = 0;
                     }
-                    if (hardmodeCheck()) {
+                    if (hardmodeCheck()[0]) {
                         var warning = document.getElementById('warning');
-                        warning.innerText = 'Hard mode is enabled | Your word does not fit the requirements';
+                        warning.innerText = hardmodeCheck()[1];
                         warning.style.visibility = 'visible';
                         const row = document.querySelector(`.rows${currentRow.charAt(3)}`);
 
@@ -430,24 +430,24 @@ function hardmodeCheck() {
     
     for (let ind = 0; ind < letters; ind++) {
         if ((correctChars.map(b=>b[1])).includes(userList[ind]) && ind !== correctChars[correctChars.map(b=>b[1]).indexOf(userList[ind])][0]) {
-            return true;
+            return [true,`The letter '${userList[ind].toUpperCase()}' needs to be in it's correct position`];
         } else if ((wrongPlace.map(b=>b[1])).includes(userList[ind]) && ind == wrongPlace[wrongPlace.map(b=>b[1]).indexOf(userList[ind])][0]) {
-            return true;
+            return [true,`The letter '${userList[ind].toUpperCase()}' cannot be in the same place as before`];
         }
     }
 
     for (let ind = 0; ind < wrongPlace.length; ind++) {
         if (!(userList.includes(wrongPlace.map(b=>b[1])[ind]))) {
-            return true;
+            return [true,`You have not included the letter '${wrongPlace.map(b=>b[1])[ind].toUpperCase()}' in your guess`];
         }
     }
     for (let ind = 0; ind < correctChars.length; ind++) {
         if (!(userList.includes(correctChars.map(b=>b[1])[ind]))) {
-            return true;
+            return [true, `You have not included the letter '${correctChars.map(b=>b[1])[ind].toUpperCase()}' in your guess`];
         }
     }
 
-    return false;
+    return [false];
 }
 
 // COOKIE FUNCTIONS
