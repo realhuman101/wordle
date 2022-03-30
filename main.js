@@ -68,8 +68,10 @@ function showSettings () {
                 document.getElementById('gameover').style.display = 'none';
             }
         }
-        if (document.getElementById('help') == e.target){
-            document.getElementById('help').style.display = 'none';
+        if (document.getElementById('help').style.display == 'block') {
+            if (document.getElementById('help') == e.target){
+                document.getElementById('help').style.display = 'none';
+            }
         }
     });
 });
