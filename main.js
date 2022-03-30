@@ -18,6 +18,8 @@ var statsSet;
 if (!setWord) {
     letters = 5;
 
+    checkHelp();
+
     var selection = easyWords[5];
     var data = allWords[5];
 
@@ -114,6 +116,13 @@ document.getElementById('hardMode').oninput = function () {
 // SETUP HELP POPUP
 function showHelp () {
     document.getElementById('help').style.display = 'block';
+}
+
+function checkHelp () {
+    if (typeof getCookie('playedBefore') === 'undefined') {
+        document.getElementById('help').style.display = 'block';
+        setCookie('playedBefore', 'yes');
+    }
 }
 
 // CHECK KEY
