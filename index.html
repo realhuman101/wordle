@@ -10,9 +10,15 @@
     </head>
     <body class="main">
         <div class="navBar">
-            <button class="navSettingLogo logos" onclick="showSettings()"><img class="settingLogo" src="media/settingLogo.svg" draggable="false"></button>
+            <div class="navLeft navObj">
+                <button class="logos" onclick="showSettings()"><img class="navIcon" src="media/settingLogo.svg" draggable="false"></button>
+                <button class="logos" onclick="showHelp()"><img class="navIcon" src="media/help-icon.svg" draggable="false"></button>
+            </div>
             <a class="navLink logos" onclick="replay()">W  O  R  D  L  E</a>
-            <button class="navStatLogo logos" onclick="showStats()"><img class="statLogo" src="media/statLogo.svg" draggable="false"></button>
+            <div class="navRight navObj">
+                <button class="logos" onclick="window.open(String.raw`https://github.com/realhuman101/wordle`, '_blank').focus();"><img class="navIcon" src="media/github-logo.svg" draggable="false"></button>
+                <button class="logos" onclick="showStats()"><img class="navIcon" src="media/statLogo.svg" draggable="false"></button>
+            </div>
         </div>
         <hr style="width: 100%; color:gray; visibility: visible;">
         <div class="container">
