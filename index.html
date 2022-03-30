@@ -10,9 +10,15 @@
     </head>
     <body class="main">
         <div class="navBar">
-            <button class="navSettingLogo logos" onclick="showSettings()"><img class="settingLogo" src="media/settingLogo.svg" draggable="false"></button>
+            <div class="navLeft navObj">
+                <button class="logos" onclick="showSettings()"><img class="navIcon" src="media/settingLogo.svg" draggable="false"></button>
+                <button class="logos" onclick="showHelp()"><img class="navIcon" src="media/help-icon.svg" draggable="false"></button>
+            </div>
             <a class="navLink logos" onclick="replay()">W  O  R  D  L  E</a>
-            <button class="navStatLogo logos" onclick="showStats()"><img class="statLogo" src="media/statLogo.svg" draggable="false"></button>
+            <div class="navRight navObj">
+                <button class="logos" onclick="window.open(String.raw`https://github.com/realhuman101/wordle`, '_blank').focus();"><img class="navIcon" src="media/github-logo.svg" draggable="false"></button>
+                <button class="logos" onclick="showStats()"><img class="navIcon" src="media/statLogo.svg" draggable="false"></button>
+            </div>
         </div>
         <hr style="width: 100%; color:gray; visibility: visible;">
         <div class="container">
@@ -206,6 +212,46 @@
             <div class="noSetting" id="noSetting">
                 <h1>Sorry for the inconvenience!</h1>
                 <h3>You cannot change your settings in the middle of a game...</h3>
+            </div>
+        </div>
+        <div class="help" id="help">
+            <div class="helpContent">
+                <h1>How To Play</h1>
+                <hr class="partSet" style="border:3px solid #f1f1f1">
+                <h2>Objective</h2>
+                <h3>Your goal is to guess the hidden word in 6 tries<hr style="visibility: hidden;">
+                    Each guess must be a valid word, and you can hit the enter button to submit.<hr style="visibility: hidden;"> 
+                    After each guess, the color of the tiles will change to show how close your guess was to the word.</h3>
+                <hr class="partSet" style="border:3px solid #f1f1f1">
+                <h2>For Example</h2>
+                <div class="examples">
+                    <div class="exampleRow">
+                        <div class="exampleTile tileCorrect">W</div>
+                        <div class="exampleTile">E</div>
+                        <div class="exampleTile">A</div>
+                        <div class="exampleTile">R</div>
+                        <div class="exampleTile">Y</div>
+                    </div>
+                    <h3>The letter 'W' is in the word and in the correct spot.</h3>
+                    <hr style="visibility: hidden; height: 10px;"> 
+                    <div class="exampleRow">
+                        <div class="exampleTile">P</div>
+                        <div class="exampleTile tilePlace">I</div>
+                        <div class="exampleTile">L</div>
+                        <div class="exampleTile">L</div>
+                        <div class="exampleTile">S</div>
+                    </div>
+                    <h3>The letter 'I' is in the word but in the wrong spot.</h3>
+                    <hr style="visibility: hidden; height: 10px;"> 
+                    <div class="exampleRow">
+                        <div class="exampleTile">V</div>
+                        <div class="exampleTile">A</div>
+                        <div class="exampleTile">G</div>
+                        <div class="exampleTile tileWrong">U</div>
+                        <div class="exampleTile">E</div>
+                    </div>
+                    <h3>The letter 'U' is not in the word in any spot.</h3>
+                </div>
             </div>
         </div>
         <script src="main.js"></script>
