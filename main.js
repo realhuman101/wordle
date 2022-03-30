@@ -55,7 +55,7 @@ function showSettings () {
     }
 }
 
-['click','ontouchstart'].forEach( function(evt) {
+['click','touchend'].forEach( function(evt) {
     window.addEventListener(evt, function(e){   
         if (settingShow) {
             if (document.getElementById('settings') == e.target){
