@@ -576,6 +576,42 @@ input:checked + .hardSelect:before {
   border-radius: 50%;
 }
 
+.exampleRow {
+  width: 50%;
+  margin: 0 auto;
+  display: flex;
+}
+
+.exampleTile {
+  border: 2px solid darkgray;
+  width: 50px;
+  height: 50px;
+  font-size: 30px;
+  text-align: center;
+  justify-content: center;
+  top: -50%;
+  line-height: 50px;
+  margin: 2px;
+}
+
+.tileCorrect {
+  background-color: #6aaa64;
+  border: 2px solid rgb(180, 180, 180);
+  color: white;
+}
+
+.tilePlace {
+  background-color: rgb(201, 180, 88);
+  border: 2px solid rgb(180, 180, 180);
+  color: white;
+}
+
+.tileWrong {
+  background-color: darkgray;
+  border: 2px solid rgb(180, 180, 180);
+  color: white;
+}
+
 .notWord {
   visibility: hidden;
   text-align: center;
