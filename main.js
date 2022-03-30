@@ -66,6 +66,9 @@ function showSettings () {
                 document.getElementById('gameover').style.display = 'none';
             }
         }
+        if (document.getElementById('help') == e.target){
+            document.getElementById('help').style.display = 'none';
+        }
     });
 });
 
@@ -108,6 +111,10 @@ document.getElementById('hardMode').oninput = function () {
     hardMode = document.getElementById('hardMode').checked;
 }
 
+// SETUP HELP POPUP
+function showHelp () {
+    document.getElementById('help').style.display = 'block';
+}
 
 // CHECK KEY
 document.addEventListener("keydown", function(e) {
