@@ -427,11 +427,29 @@ function checkWord () {
 
 function hardmodeCheck() {
     var userList = userWord.split('');
-    
+    var correctLetters = correctChars.map(b=>b[1]);
+    var wrongLetters = wrongPlace.map(b=>b[1]);
+    var correctOccurances = {};
+    var wrongOccurances = {};
+    for (let i = 0; i < correctLetters.length; i++) {
+        correctOccurances[correctLetters[i]] = 0;
+    }
+    for (let i = 0; i < wrongLetters.length; i++) {
+        wrongOccurances[wrongLetters[i]] = 0;
+    }
+    for (let i = 0; i < correctLetters.length; i++) {
+        correctOccurances[correctLetters[i]] = correctOccurances[correctLetters[i]] + 1;
+    }
+    for (let i = 0; i < wrongLetters.length; i++) {
+        wrongOccurances[wrongLetters[i]] = wrongOccurances[wrongLetters[i]] + 1;
+    }
+
     for (let ind = 0; ind < letters; ind++) {
-        if ((correctChars.map(b=>b[1])).includes(userList[ind]) && ind !== correctChars[correctChars.map(b=>b[1]).indexOf(userList[ind])][0]) {
+        if (((correctChars.map(b=>b[1])).includes(userList[ind]) && ind !== correctChars[correctChars.map(b=>b[1]).indexOf(userList[ind])][0]) && correctOccurances[userList[ind]] !== 0) {
+            correctOccurances[userList[ind]] = correctOccurances[userList[ind]] - 1
             return [true,`The letter '${userList[ind].toUpperCase()}' needs to be in it's correct position`];
-        } else if ((wrongPlace.map(b=>b[1])).includes(userList[ind]) && ind == wrongPlace[wrongPlace.map(b=>b[1]).indexOf(userList[ind])][0]) {
+        } else if (((wrongPlace.map(b=>b[1])).includes(userList[ind]) && ind == wrongPlace[wrongPlace.map(b=>b[1]).indexOf(userList[ind])][0]) && wrongOccurances[userList[ind]] !== 0) {
+            wrongOccurances[userList[ind]] = wrongOccurances[userList[ind]] - 1
             return [true,`The letter '${userList[ind].toUpperCase()}' cannot be in the same place as before`];
         }
     }
